@@ -60,12 +60,9 @@ if __name__=="__main__":  # main test
     print(g.cells[0][0])
     print(g.cells[0][1])
 
-    g.remove_wall(1, 0, Grid.EAST)
-    g.remove_wall(2, 0, Grid.SOUTH)
+    g.remove_wall(0, 0, Grid.EAST)
 
     print(g.cells[0][0])
     print(g.cells[0][1])
 
-    print()
-    g.create_grid()
     g.display()
