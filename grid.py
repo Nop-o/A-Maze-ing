@@ -14,6 +14,7 @@ class Grid:
         self.create_grid()
 
     def create_grid(self) -> None:
+        self.cells = []
         for y in range(self.height): # for each line
             line: list[int] = []
             for x in range(self.width): # for each column
@@ -64,4 +65,7 @@ if __name__=="__main__":  # main test
 
     print(g.cells[0][0])
     print(g.cells[0][1])
+
+    print()
+    g.create_grid()
     g.display()
