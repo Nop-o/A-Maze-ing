@@ -5,7 +5,7 @@ from collections import deque
 
 class MazeGenerator:
     def __init__(self, width: int, height: int, entry: tuple[int, int],
-                 exit: tuple[int, int],
+                 exit: tuple[int, int] | None,
                  perfect: bool, seed: int | None) -> None:
         self.width = width
         self.height = height
@@ -36,7 +36,7 @@ class MazeGenerator:
                 stack.pop()
 
     def get_unvisited_neighbors(self, cell: tuple[int, int],
-                                visited: set) -> list:
+                                visited: set[tuple[int, int]]) -> list[int]:
         g = self.grid
         x, y = cell
         neighbors = []
@@ -48,27 +48,22 @@ class MazeGenerator:
                 neighbors.append(direction)
         return neighbors
 
-    def solver_bfs(self):
-        parent = {self.entry: None}
-        visited = {self.entry}
-        queue = deque([self.entry])
+    def solver_bfs(self) -> list[tuple[int, int]] | None:
+        parent: dict[tuple[int, int],
+                     tuple[int, int] | None] = {self.entry: None}
+        visited: set[tuple[int, int]] = {self.entry}
+        queue: deque[tuple[int, int]] = deque([self.entry])
 
         while queue:
-            print("1")
-            current_cell = queue.popleft()
+            current_cell: tuple[int, int] = queue.popleft()
             if current_cell == self.exit:
-                return parent
-            print("2")
+                return self.get_path_way(parent)
             x, y = current_cell
             for neighbor in self.get_neighbors(x, y):
-                print(self.get_neighbors(x, y))
-                print("3")
                 if neighbor not in visited:
-                    print("5")
                     visited.add(neighbor)
                     parent[neighbor] = current_cell
                     queue.append(neighbor)
-                    print("4")
         return None
 
     def get_neighbors(self, x: int, y: int) -> list[tuple[int, int]]:
@@ -83,12 +78,22 @@ class MazeGenerator:
                     neighbors.append((nx, ny))
         return neighbors
 
-    def get_path_way(parent: dict) -> dict:
-        pass
+    def get_path_way(self,
+                     parent: dict[tuple[int, int],
+                                  tuple[int, int]
+                                  | None]) -> list[tuple[int, int]]:
+        path = []
+        current = self.exit
+
+        while current is not None:
+            path.append(current)
+            current = parent[current]
+        path.reverse()
+        return path
 
 
 if __name__ == "__main__":
-    mg = MazeGenerator(10, 10, (0, 0), (9, 9), perfect=True, seed=None)
+    mg = MazeGenerator(15, 15, (0, 0), (9, 9), perfect=True, seed=None)
     mg.generate_maze_dfs()
     mg.grid.display()
     print(mg.solver_bfs())

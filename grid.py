@@ -22,8 +22,8 @@ class Grid:
             self.cells.append(line)  # grid[y][x]
 
     def remove_wall(self, x: int, y: int, direction: int) -> None:
-
-        dx, dy = self.DELTA[direction]  # direction to go towards the neighboring cell
+        # direction to go towards the neighboring cell
+        dx, dy = self.DELTA[direction]
         nx = x + dx
         ny = y + dy
 
@@ -31,14 +31,16 @@ class Grid:
             return
 
         self.cells[y][x] &= ~direction  # breaks down the cell wall
-        self.cells[ny][nx] &= ~self.OPPOSITE[direction]  # breaks down the wall of the neighboring cell
+        self.cells[ny][nx] &= ~self.OPPOSITE[direction]
+        # breaks down the wall of the neighboring cell
 
     def is_valid(self, x: int, y: int) -> bool:
         if 0 <= x < self.width and 0 <= y < self.height:
             return True
         return False
 
-    def display(self) -> None:  # ffunction that tests the grid by displaying in ASCII
+    def display(self) -> None:
+        # ffunction that tests the grid by displaying in ASCII
         print("+" + "---+" * self.width)  # top line
 
         for y in range(self.height):  # middle line
