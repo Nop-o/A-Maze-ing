@@ -42,8 +42,9 @@ def get_file_content(file_name: str) -> List[str]:
     return file_content
 
 
-def transform_input(file_content: List[str]) -> Dict:
-    return_value: Dict = {"WIDTH": None,
+def transform_input(file_content: List[str]) -> Dict[str, Any]:
+    return_value: Dict[str, Any] = {
+                          "WIDTH": None,
                           "HEIGHT": None,
                           "ENTRY_X": None,
                           "ENTRY_Y": None,
