@@ -1,4 +1,4 @@
-from pydantic import Field, BaseModel, model_validator
+from pydantic import Field, BaseModel, model_validator, ValidationError
 from typing import Dict, List, Any
 
 
@@ -11,7 +11,7 @@ class ValidFileInput(BaseModel):
     maze_exit_y: int = Field(ge=0)
     maze_output_filename: str
     is_maze_perfect: bool
-    maze_seed: bool
+    maze_seed: int | None
     maze_algorithm: str
     maze_display_mode: str
 
@@ -51,7 +51,7 @@ def transform_input(file_content: List[str]) -> Dict:
                           "EXIT_Y": None,
                           "OUTPUT_FILE": None,
                           "PERFECT": "True",
-                          "SEED": "False",
+                          "SEED": None,
                           "ALGORITHM": "Basic",
                           "DISPLAY_MODE": "Basic",}
     settings = ["WIDTH", "HEIGHT", "ENTRY", "EXIT", "OUTPUT_FILE",
@@ -87,26 +87,26 @@ def transform_input(file_content: List[str]) -> Dict:
     
 
 def validate_file_content(file_content: Dict[str, Any], file_name: str) -> None:
-    int_settings = ["WIDTH", "HEIGHT"]
+    int_settings = ["WIDTH", "HEIGHT", "SEED"]
     tuple_settings = ["ENTRY", "EXIT"]
-    bool_settings = ["PERFECT", "SEED"]
+    bool_settings = ["PERFECT"]
     for key, value in file_content.items():
         if key in int_settings:
             try:
                 file_content[key] = int(value)
-            except Exception as e:
+            except ValueError as e:
                 print(e)
 
         if key in tuple_settings:
             try:
                 x, y = value
                 file_content[key] = (int(x), int(y))
-            except Exception as e:
+            except ValueError as e:
                 print(e)
         
         if key in bool_settings:
             if value != "True" and value != "False":
-                raise ValueError("File input is invalid : wrong setting given")
+                raise ValueError("File input is invalid : wrong boolean value")
 
     if file_name == file_content["OUTPUT_FILE"]:
         raise ValueError("Input and output files can't be the same")
@@ -131,7 +131,7 @@ def parse_input_file(file_name: str) -> ValidFileInput | None:
                             maze_algorithm=maze_settings["ALGORITHM"],
                             maze_display_mode=maze_settings["DISPLAY_MODE"]
                                                 )
-    except Exception as e:
+    except (ValidationError, FileNotFoundError, ValueError) as e:
         print(e)
         return None
 

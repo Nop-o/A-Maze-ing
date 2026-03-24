@@ -16,3 +16,7 @@ EXIT=19,14
 OUTPUT_FILE=maze.txt
 PERFECT=True
 ```
+
+
+## Sources :
+[How to change the output color](https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux)
