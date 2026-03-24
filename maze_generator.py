@@ -91,9 +91,26 @@ class MazeGenerator:
         path.reverse()
         return path
 
+    def create_hexa_maze(self) -> list[list[str]]:
+        hexa_maze: list[list[str]] = []
+        hexa = "0123456789ABCDEF"
+
+        for ligns in self.grid.cells:
+            new_lign: list[str] = []
+            for cells in ligns:
+                new_cell = hexa[cells]
+                new_lign.append(new_cell)
+            hexa_maze.append(new_lign)
+
+        return hexa_maze
+
 
 if __name__ == "__main__":
     mg = MazeGenerator(15, 15, (0, 0), (9, 9), perfect=True, seed=None)
     mg.generate_maze_dfs()
-    mg.grid.display()
-    print(mg.solver_bfs())
+    hexa_maze = mg.create_hexa_maze()
+    print(hexa_maze)
+    print("------------------------")
+    # print(mg.grid.cells)
+    # # mg.grid.display()
+    # # print(mg.solver_bfs())
