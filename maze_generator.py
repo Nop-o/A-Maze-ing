@@ -6,7 +6,7 @@ from collections import deque
 class MazeGenerator:
     def __init__(self, width: int, height: int, entry: tuple[int, int],
                  exit: tuple[int, int] | None,
-                 perfect: bool, seed: int | None) -> None:
+                 perfect: bool, seed: int) -> None:
         self.width = width
         self.height = height
         self.entry = entry
@@ -14,8 +14,6 @@ class MazeGenerator:
         self.perfect = perfect
         self.seed = seed
         self.grid = Grid(width, height)
-        if seed is not None:
-            random.seed(seed)
         self.logo = self.get_logo()
 
     def generate_maze_dfs(self) -> None:
@@ -222,7 +220,7 @@ class MazeGenerator:
 
 
 if __name__ == "__main__":
-    mg = MazeGenerator(10, 10, (0, 0), (9, 9), perfect=False, seed=None)
+    mg = MazeGenerator(10, 10, (0, 0), (9, 9), perfect=False)
     mg.generate_maze_dfs()
     hexa_maze = mg.create_hexa_maze()
     perfect_maze_path = mg.solver_bfs()

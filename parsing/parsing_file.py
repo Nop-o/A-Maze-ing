@@ -1,5 +1,6 @@
 from pydantic import Field, BaseModel, model_validator, ValidationError
 from typing import Dict, List, Any
+import random
 
 
 class ValidFileInput(BaseModel):
@@ -11,7 +12,7 @@ class ValidFileInput(BaseModel):
     exit_y: int = Field(ge=0)
     output_filename: str
     is_perfect: bool
-    seed: int | None
+    seed: int
     algorithm: str
     display_mode: str
 
@@ -61,7 +62,7 @@ def transform_input(file_content: List[str]) -> Dict[str, Any]:
                           "EXIT_Y": None,
                           "OUTPUT_FILE": None,
                           "PERFECT": "True",
-                          "SEED": None,
+                          "SEED": random.randint(1, 1000),
                           "ALGORITHM": "Basic",
                           "DISPLAY_MODE": "Basic",
                           }
