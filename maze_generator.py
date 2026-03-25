@@ -21,6 +21,7 @@ class MazeGenerator:
     def generate_maze_dfs(self) -> None:
         stack = [self.entry]
         visited = {self.entry}
+        visited.update(self.logo)
 
         while stack:
             current_cell = stack[-1]
@@ -48,7 +49,9 @@ class MazeGenerator:
                     direction = random.choice(directions)
                     dx, dy = self.grid.DELTA[direction]
                     nx, ny = x + dx, y + dy
-                    if self.grid.is_valid(nx, ny):
+                    if (self.grid.is_valid(nx, ny)
+                       and (nx, ny) not in self.logo
+                       and (x, y) not in self.logo):
                         self.grid.remove_wall(x, y, direction)
                         if self.verif_3x3():
                             self.grid.add_wall(x, y, direction)
@@ -184,18 +187,17 @@ class MazeGenerator:
         return "".join(cardinal_path)
 
     def get_logo(self) -> list[tuple[int, int]]:
-        x, y = None
 
         if self.width % 2 == 0:
-            x = (self.width / 2) - 1
+            x = (self.width // 2) - 1
         else:
-            x = (self.width / 2) + 1
+            x = (self.width // 2) + 1
 
         if self.height % 2 == 0:
-            y = (self.height / 2) - 1
+            y = (self.height // 2) - 1
         else:
-            y = (self.height / 2) + 1
-        
+            y = (self.height // 2) + 1
+
         logo = [
             (x - 3, y - 2),
             (x - 3, y - 1),
