@@ -34,6 +34,17 @@ class Grid:
         self.cells[ny][nx] &= ~self.OPPOSITE[direction]
         # breaks down the wall of the neighboring cell
 
+    def add_wall(self, x: int, y: int, direction: int) -> None:
+        dx, dy = self.DELTA[direction]
+        nx = x + dx
+        ny = y + dy
+
+        if not self.is_valid(nx, ny):
+            return
+
+        self.cells[y][x] |= direction
+        self.cells[ny][nx] |= self.OPPOSITE[direction]
+
     def is_valid(self, x: int, y: int) -> bool:
         if 0 <= x < self.width and 0 <= y < self.height:
             return True
