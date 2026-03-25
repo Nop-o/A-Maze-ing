@@ -16,6 +16,7 @@ class MazeGenerator:
         self.grid = Grid(width, height)
         if seed is not None:
             random.seed(seed)
+        self.logo = self.get_logo()
 
     def generate_maze_dfs(self) -> None:
         stack = [self.entry]
@@ -151,6 +152,41 @@ class MazeGenerator:
                 cardinal_path.append('E')
 
         return "".join(cardinal_path)
+
+    def get_logo(self) -> list[tuple[int, int]]:
+        x, y = None
+
+        if self.width % 2 == 0:
+            x = (self.width / 2) - 1
+        else:
+            x = (self.width / 2) + 1
+
+        if self.height % 2 == 0:
+            y = (self.height / 2) - 1
+        else:
+            y = (self.height / 2) + 1
+        
+        logo = [
+            (x - 3, y - 2),
+            (x - 3, y - 1),
+            (x - 3, y),
+            (x - 2, y),
+            (x - 1, y),
+            (x - 1, y + 1),
+            (x - 1, y + 2),
+            (x + 1, y - 2),
+            (x + 2, y - 2),
+            (x + 3, y - 2),
+            (x + 3, y - 1),
+            (x + 3, y),
+            (x + 2, y),
+            (x + 1, y),
+            (x + 1, y + 1),
+            (x + 1, y + 2),
+            (x + 2, y + 2),
+            (x + 3, y + 2),
+        ]
+        return logo
 
 
 if __name__ == "__main__":
