@@ -3,38 +3,38 @@ from typing import Dict, List, Any
 
 
 class ValidFileInput(BaseModel):
-    maze_width: int = Field(ge=0)
-    maze_height: int = Field(ge=0)
-    maze_entry_x: int = Field(ge=0)
-    maze_entry_y: int = Field(ge=0)
-    maze_exit_x: int = Field(ge=0)
-    maze_exit_y: int = Field(ge=0)
-    maze_output_filename: str
-    is_maze_perfect: bool
-    maze_seed: int | None
-    maze_algorithm: str
-    maze_display_mode: str
+    width: int = Field(ge=0)
+    height: int = Field(ge=0)
+    entry_x: int = Field(ge=0)
+    entry_y: int = Field(ge=0)
+    exit_x: int = Field(ge=0)
+    exit_y: int = Field(ge=0)
+    output_filename: str
+    is_perfect: bool
+    seed: int | None
+    algorithm: str
+    display_mode: str
 
     @model_validator(mode='after')
     def validate_input(self) -> 'ValidFileInput':
-        if (self.maze_entry_x == self.maze_exit_x and
-                self.maze_entry_y == self.maze_exit_y):
+        if (self.entry_x == self.exit_x and
+                self.entry_y == self.exit_y):
             raise ValueError("The maze entry and exit can't be in "
                              "the same file")
 
-        if (self.maze_entry_x > self.maze_width or
-                self.maze_entry_y > self.maze_height):
+        if (self.entry_x > self.width or
+                self.entry_y > self.height):
             raise ValueError("The maze entry needs to be inside the maze")
 
-        if (self.maze_exit_x > self.maze_width or
-                self.maze_exit_y > self.maze_height):
+        if (self.exit_x > self.width or
+                self.exit_y > self.height):
             raise ValueError("The maze exit needs to be inside the maze")
 
-        if self.maze_width < 9:
+        if self.width < 9:
             raise ValueError(
                 "The maze width is too small to create a maze with the 42 logo"
                 )
-        if self.maze_height < 7:
+        if self.height < 7:
             raise ValueError(
                 "The maze height is too small to create a maze with the 42 "
                 "logo")
@@ -102,6 +102,7 @@ def validate_file_content(
     int_settings = ["WIDTH", "HEIGHT", "SEED"]
     tuple_settings = ["ENTRY", "EXIT"]
     bool_settings = ["PERFECT"]
+
     for key, value in file_content.items():
         if key in int_settings:
             try:
@@ -130,17 +131,17 @@ def parse_input_file(file_name: str) -> ValidFileInput | None:
         maze_settings = transform_input(file_content)
         validate_file_content(maze_settings, file_name)
         validated_file_content = ValidFileInput(
-                            maze_width=maze_settings["WIDTH"],
-                            maze_height=maze_settings["HEIGHT"],
-                            maze_entry_x=maze_settings["ENTRY"][0],
-                            maze_entry_y=maze_settings["ENTRY"][1],
-                            maze_exit_x=maze_settings["EXIT"][0],
-                            maze_exit_y=maze_settings["EXIT"][1],
-                            maze_output_filename=maze_settings["OUTPUT_FILE"],
-                            is_maze_perfect=maze_settings["PERFECT"],
-                            maze_seed=maze_settings["SEED"],
-                            maze_algorithm=maze_settings["ALGORITHM"],
-                            maze_display_mode=maze_settings["DISPLAY_MODE"]
+                            width=maze_settings["WIDTH"],
+                            height=maze_settings["HEIGHT"],
+                            entry_x=maze_settings["ENTRY"][0],
+                            entry_y=maze_settings["ENTRY"][1],
+                            exit_x=maze_settings["EXIT"][0],
+                            exit_y=maze_settings["EXIT"][1],
+                            output_filename=maze_settings["OUTPUT_FILE"],
+                            is_perfect=maze_settings["PERFECT"],
+                            seed=maze_settings["SEED"],
+                            algorithm=maze_settings["ALGORITHM"],
+                            display_mode=maze_settings["DISPLAY_MODE"]
                                                 )
     except (ValidationError, FileNotFoundError, ValueError) as e:
         print(e)
