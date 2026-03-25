@@ -3,8 +3,8 @@ from typing import Dict, List, Any
 
 
 class ValidFileInput(BaseModel):
-    maze_width: int = Field(ge=2)
-    maze_height: int = Field(ge=2)
+    maze_width: int = Field(ge=0)
+    maze_height: int = Field(ge=0)
     maze_entry_x: int = Field(ge=0)
     maze_entry_y: int = Field(ge=0)
     maze_exit_x: int = Field(ge=0)
@@ -29,6 +29,15 @@ class ValidFileInput(BaseModel):
         if (self.maze_exit_x > self.maze_width or
                 self.maze_exit_y > self.maze_height):
             raise ValueError("The maze exit needs to be inside the maze")
+
+        if self.maze_width < 9:
+            raise ValueError(
+                "The maze width is too small to create a maze with the 42 logo"
+                )
+        if self.maze_height < 7:
+            raise ValueError(
+                "The maze height is too small to create a maze with the 42 "
+                "logo")
         return self
 
 
