@@ -1,7 +1,8 @@
 from maze_generator import MazeGenerator
 from parsing.parsing_file import parse_input_file
-from os import sys
-from image_rendering import display_maze_from_hexa, display_maze_from_hexa2
+import sys
+from image_rendering import MazeDisplay
+
 
 def a_maze_ing(file_name: str) -> None:
     maze_setting = parse_input_file(file_name)
@@ -25,37 +26,13 @@ def a_maze_ing(file_name: str) -> None:
                                 hexa_maze, cardinal_path)
     print(maze.solver_bfs())
 
-    palette = {'0': ("    ", "    "),
-               '1': ("▀▀▀▀", "    "),
-               '2': ("   █", "   █"),
-               '3': ("▀▀▀█", "   █"),
-               '4': ("    ", "▄▄▄▄"),
-               '5': ("▀▀▀▀", "▄▄▄▄"),
-               '6': ("   █", "▄▄▄█"),
-               '7': ("▀▀▀█", "▄▄▄█"),
-               '8': ("█   ", "█   "),
-               '9': ("█▀▀▀", "█   "),
-               'A': ("█  █", "█  █"),
-               'B': ("█▀▀█", "█  █"),
-               'C': ("█   ", "█▄▄▄"),
-               'D': ("█▀▀▀", "█▄▄▄"),
-               'E': ("█  █", "█▄▄█"),
-               'F': ("█▀▀█", "█▄▄█"),
-               }
-
-    small_palette = {'empty': ("    ", "    "),
-                     'top_only': ("▀▀▀▀", "    "),
-                     'left_only': ("█   ", "█   "),
-                     'both': ("█▀▀▀", "█   "),
-                     }
-
-    display_maze_from_hexa2(hexa_maze, small_palette)
+    MazeDisplay.display_maze_from_hexa2(hexa_maze)
     print("\n\n")
-    display_maze_from_hexa(hexa_maze, palette)
+    MazeDisplay.display_maze_from_hexa(hexa_maze)
     maze.grid.display()
 
 
 if __name__ == "__main__":
-    # if len(sys.argv) != 2:
-    #     sys.exit(-1)
-    a_maze_ing("input.txt")
+    if len(sys.argv) != 2:
+        sys.exit(-1)
+    a_maze_ing(sys.argv[1])

@@ -39,7 +39,7 @@ class MazeGenerator:
 
     def maze_imperfect(self) -> None:
         lst: list[int] = [1, 2, 3]
-        directions: list = [Grid.NORTH, Grid.SOUTH, Grid.EAST, Grid.WEST]
+        directions: list[int] = [Grid.NORTH, Grid.SOUTH, Grid.EAST, Grid.WEST]
         for y in range(self.height):
             for x in range(self.width):
                 res = random.choice(lst)
@@ -220,7 +220,7 @@ class MazeGenerator:
 
 
 if __name__ == "__main__":
-    mg = MazeGenerator(10, 10, (0, 0), (9, 9), perfect=False)
+    mg = MazeGenerator(10, 10, (0, 0), (9, 9), perfect=False, seed=42)
     mg.generate_maze_dfs()
     hexa_maze = mg.create_hexa_maze()
     perfect_maze_path = mg.solver_bfs()
