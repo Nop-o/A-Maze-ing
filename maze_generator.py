@@ -34,6 +34,43 @@ class MazeGenerator:
                 stack.append((nx, ny))
             else:
                 stack.pop()
+        if not self.perfect:
+            self.maze_imperfect()
+
+    def maze_imperfect(self) -> None:
+        lst: list[int] = [1, 2, 3]
+        directions: list = [Grid.NORTH, Grid.SOUTH, Grid.EAST, Grid.WEST]
+        for y in range(self.height):
+            for x in range(self.width):
+                res = random.choice(lst)
+                if res == 3:
+                    direction = random.choice(directions)
+                    dx, dy = self.grid.DELTA[direction]
+                    nx, ny = x + dx, y + dy
+                    if self.grid.is_valid(nx, ny):
+                        self.grid.remove_wall(x, y, direction)
+                        if self.verif_3x3():
+                            self.grid.add_wall(x, y, direction)
+
+    def verif_3x3(self) -> bool:
+        for y in range(self.height - 2):
+            for x in range(self.width - 2):
+                if self.check(x, y):
+                    return True
+        return False
+
+    def check(self, x: int, y: int) -> bool:
+        # check East wall
+        for y in range(3):
+            for x in range(2):
+                if self.grid.cells[y][x] & self.grid.EAST:
+                    return False
+        # check South wall
+        for y in range(2):
+            for x in range(3):
+                if self.grid.cells[y][x] & self.grid.SOUTH:
+                    return False
+        return True
 
     def get_unvisited_neighbors(self, cell: tuple[int, int],
                                 visited: set[tuple[int, int]]) -> list[int]:
@@ -126,9 +163,9 @@ class MazeGenerator:
         if path is None:
             raise ValueError("Can't create a cardinal path : there is no path")
 
-        if self.perfect is False:
-            raise ValueError(
-                "Can't create a cardinal path : the maze isn't perfect")
+        # if self.perfect is False:
+        #     raise ValueError(
+        #         "Can't create a cardinal path : the maze isn't perfect")
 
         cardinal_path: list[str] = []
         for cell, next_cell in zip(path, path[1:]):
@@ -147,7 +184,7 @@ class MazeGenerator:
 
 
 if __name__ == "__main__":
-    mg = MazeGenerator(10, 10, (0, 0), (9, 9), perfect=True, seed=None)
+    mg = MazeGenerator(10, 10, (0, 0), (9, 9), perfect=False, seed=None)
     mg.generate_maze_dfs()
     hexa_maze = mg.create_hexa_maze()
     perfect_maze_path = mg.solver_bfs()
