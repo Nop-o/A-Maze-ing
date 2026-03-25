@@ -52,10 +52,10 @@ class MazeGenerator:
         parent: dict[tuple[int, int],
                      tuple[int, int] | None] = {self.entry: None}
         visited: set[tuple[int, int]] = {self.entry}
-        queue: deque[tuple[int, int]] = deque([self.entry])
+        file: deque[tuple[int, int]] = deque([self.entry])
 
-        while queue:
-            current_cell: tuple[int, int] = queue.popleft()
+        while file:
+            current_cell: tuple[int, int] = file.popleft()
             if current_cell == self.exit:
                 return self.get_path_way(parent)
             x, y = current_cell
@@ -63,7 +63,7 @@ class MazeGenerator:
                 if neighbor not in visited:
                     visited.add(neighbor)
                     parent[neighbor] = current_cell
-                    queue.append(neighbor)
+                    file.append(neighbor)
         return None
 
     def get_neighbors(self, x: int, y: int) -> list[tuple[int, int]]:
@@ -85,7 +85,7 @@ class MazeGenerator:
         path = []
         current = self.exit
 
-        while current is not None:
+        while current:
             path.append(current)
             current = parent[current]
         path.reverse()
@@ -111,20 +111,13 @@ class MazeGenerator:
 
         x, y = self.entry
         x2, y2 = self.exit
-        try:
-            str_x = str(x)
-            str_y = str(y)
-            str_x2 = str(x2)
-            str_y2 = str(y2)
-        except ValueError as e:
-            print(e)
 
         try:
             with open(file_name, "w") as file:
                 file.write("\n".join(hexa_maze))
                 file.write("\n\n")
-                file.write(f"{str_x},{str_y}\n")
-                file.write(f"{str_x2},{str_y2}\n")
+                file.write(f"{x},{y}\n")
+                file.write(f"{x2},{y2}\n")
                 file.write(entry_to_exit_path + '\n')
         except OSError as e:
             print(e)
@@ -142,19 +135,19 @@ class MazeGenerator:
             x, y = cell
             x2, y2 = next_cell
             if x > x2:
-                cardinal_path.append('N')
-            if x2 > x:
-                cardinal_path.append('S')
-            if y > y2:
                 cardinal_path.append('W')
-            if y2 > y:
+            if x2 > x:
                 cardinal_path.append('E')
+            if y > y2:
+                cardinal_path.append('N')
+            if y2 > y:
+                cardinal_path.append('S')
 
         return "".join(cardinal_path)
 
 
 if __name__ == "__main__":
-    mg = MazeGenerator(15, 15, (0, 0), (9, 9), perfect=False, seed=None)
+    mg = MazeGenerator(10, 10, (0, 0), (9, 9), perfect=True, seed=None)
     mg.generate_maze_dfs()
     hexa_maze = mg.create_hexa_maze()
     perfect_maze_path = mg.solver_bfs()
@@ -164,6 +157,5 @@ if __name__ == "__main__":
         print(e)
     else:
         mg.print_maze_to_file("file.txt", hexa_maze, cardinal_path)
-    # print(mg.grid.cells)
-    # mg.grid.display()
-    # print(mg.solver_bfs())
+    mg.grid.display()
+    print(mg.solver_bfs())
