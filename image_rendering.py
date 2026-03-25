@@ -1,8 +1,8 @@
 from maze_generator import MazeGenerator
-from grid import Grid
 
 
-def display_maze_from_hexa(hexa_maze: list[str], palette: dict[str, tuple[str]]) -> None:
+def display_maze_from_hexa(hexa_maze: list[str],
+                           palette: dict[str, tuple[str]]) -> None:
     for lign_part_1 in hexa_maze:
         lign_part_2: list[str] = []
         for i in range(len(lign_part_1)):
@@ -12,7 +12,8 @@ def display_maze_from_hexa(hexa_maze: list[str], palette: dict[str, tuple[str]])
         print("".join(lign_part_2))
 
 
-def display_maze_from_hexa2(hexa_maze: list[str], palette: dict[str, tuple[str]]) -> None:
+def display_maze_from_hexa2(hexa_maze: list[str],
+                            palette: dict[str, tuple[str]]) -> None:
     palette_list: dict[str, list[str]] = {
         "empty": ['0', '2', '4', '6'],
         "top_only": ['1', '3', '5', '7'],
@@ -54,13 +55,13 @@ if __name__ == "__main__":
                'D': ("█▀▀▀", "█▄▄▄"),
                'E': ("█  █", "█▄▄█"),
                'F': ("█▀▀█", "█▄▄█"),
-    }
+               }
 
     small_palette = {'empty': ("    ", "    "),
                      'top_only': ("▀▀▀▀", "    "),
                      'left_only': ("█   ", "█   "),
                      'both': ("█▀▀▀", "█   "),
-    }
+                     }
 
     mg = MazeGenerator(15, 15, (0, 0), (9, 9), perfect=True, seed=None)
     mg.generate_maze_dfs()
