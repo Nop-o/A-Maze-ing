@@ -180,7 +180,7 @@ class MazeGenerator:
 
         return "".join(cardinal_path)
 
-    def get_logo(self) -> None:
+    def get_logo(self) -> list[tuple[int, int]]:
         width = self.width
         while width > 9:
             height = self.height
@@ -233,24 +233,22 @@ class MazeGenerator:
 
 
 if __name__ == "__main__":
-    # try:
-    #     mg = MazeGenerator(10, 10, (2, 4), (9, 9), perfect=False, seed=42)
-    # except ValueError as e:
-    #     print(e)
+    try:
+        mg = MazeGenerator(10, 10, (2, 4), (9, 9), perfect=False, seed=42)
+    except ValueError as e:
+        print(e)
 
-    # print(mg.exit)
-    # print(mg.entry)
-    # print(f"logo : {mg.logo}")
-    # mg.generate_maze_dfs()
-    # hexa_maze = mg.create_hexa_maze()
-    # perfect_maze_path = mg.solver_bfs()
-    # try:
-    #     cardinal_path = mg.find_cardinal_path(perfect_maze_path)
-    # except ValueError as e:
-    #     print(e)
-    # else:
-    #     mg.print_maze_to_file("file.txt", hexa_maze, cardinal_path)
-    # mg.grid.display()
-    # print(mg.solver_bfs())
-    print("\033[1;30;47mBright Green\033[0m")
-    print("\033[1;32;40m Bright Green \n")
+    print(mg.exit)
+    print(mg.entry)
+    print(f"logo : {mg.logo}")
+    mg.generate_maze_dfs()
+    hexa_maze = mg.create_hexa_maze()
+    perfect_maze_path = mg.solver_bfs()
+    try:
+        cardinal_path = mg.find_cardinal_path(perfect_maze_path)
+    except ValueError as e:
+        print(e)
+    else:
+        mg.print_maze_to_file("file.txt", hexa_maze, cardinal_path)
+    mg.grid.display()
+    print(mg.solver_bfs())
