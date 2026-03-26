@@ -20,3 +20,14 @@ PERFECT=True
 
 ## Sources :
 [How to change the output color](https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux)
+
+text coloring: 
+début de séquence  : \033[
+fin de séquence    : \033[0m 	(le 0 remet tous les settings à jour
+milieu de séquence : 1;32;40m 	
+	- 1er élément  : style d'écriture (0-9)
+	- 2ème élément : text color (30-47 et 90-97(Bright))
+	- 3ème élément : background color (40-47 et 100-107(Birght))
+
+exemple : print("\033[1;30;47mBright Green\033[0m")
+![alt text](image.png)

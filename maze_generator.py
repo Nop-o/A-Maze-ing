@@ -180,19 +180,36 @@ class MazeGenerator:
 
         return "".join(cardinal_path)
 
-    def get_logo(self) -> list[tuple[int, int]]:
+    def get_logo(self) -> None:
+        width = self.width
+        while width > 9:
+            height = self.height
+            while height > 7:
+                possible_logo = self.create_logo(width, height)
+                if self.is_logo_valid(possible_logo):
+                    return possible_logo
+                height -= 1
+            width -= 1
+        raise ValueError(
+                "The maze height is too small to create a maze with the 42 "
+                "logo")
 
-        if self.width % 2 == 0:
-            x = (self.width // 2) - 1
+    def is_logo_valid(self, logo: list[tuple[int, int]]) -> bool:
+        return self.entry not in logo and self.exit not in logo
+
+    @staticmethod
+    def create_logo(width: int, height: int) -> list[tuple[int, int]]:
+        if width % 2 == 0:
+            x = (width // 2) - 1
         else:
-            x = (self.width // 2) + 1
+            x = (width // 2) + 1
 
-        if self.height % 2 == 0:
-            y = (self.height // 2) - 1
+        if height % 2 == 0:
+            y = (height // 2) - 1
         else:
-            y = (self.height // 2) + 1
+            y = (height // 2) + 1
 
-        logo = [
+        logo: list[tuple[int, int]] = [
             (x - 3, y - 2),
             (x - 3, y - 1),
             (x - 3, y),
@@ -216,15 +233,24 @@ class MazeGenerator:
 
 
 if __name__ == "__main__":
-    mg = MazeGenerator(10, 10, (0, 0), (9, 9), perfect=False, seed=42)
-    mg.generate_maze_dfs()
-    hexa_maze = mg.create_hexa_maze()
-    perfect_maze_path = mg.solver_bfs()
-    try:
-        cardinal_path = mg.find_cardinal_path(perfect_maze_path)
-    except ValueError as e:
-        print(e)
-    else:
-        mg.print_maze_to_file("file.txt", hexa_maze, cardinal_path)
-    mg.grid.display()
-    print(mg.solver_bfs())
+    # try:
+    #     mg = MazeGenerator(10, 10, (2, 4), (9, 9), perfect=False, seed=42)
+    # except ValueError as e:
+    #     print(e)
+
+    # print(mg.exit)
+    # print(mg.entry)
+    # print(f"logo : {mg.logo}")
+    # mg.generate_maze_dfs()
+    # hexa_maze = mg.create_hexa_maze()
+    # perfect_maze_path = mg.solver_bfs()
+    # try:
+    #     cardinal_path = mg.find_cardinal_path(perfect_maze_path)
+    # except ValueError as e:
+    #     print(e)
+    # else:
+    #     mg.print_maze_to_file("file.txt", hexa_maze, cardinal_path)
+    # mg.grid.display()
+    # print(mg.solver_bfs())
+    print("\033[1;30;47mBright Green\033[0m")
+    print("\033[1;32;40m Bright Green \n")
