@@ -26,6 +26,5 @@ lint:
 
 lint-strict:
 	$(PYTHON) -m flake8 . exclude=maze
-	mypy mypy grid.py maze_generator.py a_maze_ing.py \
-	        --strict \
-	        --explicit-package-bases
+	mypy	--strict . \
+	    	--explicit-package-bases
