@@ -61,16 +61,16 @@ class MazeGenerator:
                     return True
         return False
 
-    def check(self, x: int, y: int) -> bool:
+    def check(self, nx: int, ny: int) -> bool:
         # check East wall
         for y in range(3):
             for x in range(2):
-                if self.grid.cells[y][x] & self.grid.EAST:
+                if self.grid.cells[ny + y][nx + x] & self.grid.EAST:
                     return False
         # check South wall
         for y in range(2):
             for x in range(3):
-                if self.grid.cells[y][x] & self.grid.SOUTH:
+                if self.grid.cells[ny + y][nx + x] & self.grid.SOUTH:
                     return False
         return True
 
