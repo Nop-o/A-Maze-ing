@@ -10,11 +10,11 @@ def a_maze_ing(file_name: str) -> None:
         return
     try:
         maze = MazeGenerator(maze_setting.width,
-                            maze_setting.height,
-                            (maze_setting.entry_x, maze_setting.entry_x),
-                            (maze_setting.exit_x, maze_setting.exit_x),
-                            perfect=maze_setting.is_perfect,
-                            seed=maze_setting.seed)
+                             maze_setting.height,
+                             (maze_setting.entry_x, maze_setting.entry_x),
+                             (maze_setting.exit_x, maze_setting.exit_x),
+                             perfect=maze_setting.is_perfect,
+                             seed=maze_setting.seed)
     except ValueError as e:
         print(e)
 
