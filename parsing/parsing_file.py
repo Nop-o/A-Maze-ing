@@ -47,8 +47,11 @@ def get_file_content(file_name: str) -> List[str]:
         if not file:
             raise FileNotFoundError("The file doesn't exist, create one first "
                                     "or use the default config")
-        file_content = file.readlines()
+        content = file.readlines()
 
+    file_content = []
+    for lign in content:
+        file_content.append(lign.strip('\n'))
     return file_content
 
 

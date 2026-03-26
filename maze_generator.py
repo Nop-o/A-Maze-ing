@@ -165,10 +165,6 @@ class MazeGenerator:
         if path is None:
             raise ValueError("Can't create a cardinal path : there is no path")
 
-        # if self.perfect is False:
-        #     raise ValueError(
-        #         "Can't create a cardinal path : the maze isn't perfect")
-
         cardinal_path: list[str] = []
         for cell, next_cell in zip(path, path[1:]):
             x, y = cell
