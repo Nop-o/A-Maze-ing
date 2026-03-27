@@ -2,6 +2,8 @@ PYTHON = python3
 MAIN = a_maze_ing.py
 INPUT = input.txt
 
+.SILENT:
+
 install:
 	pip install -r requirements.txt
 
@@ -17,7 +19,7 @@ clean:
 	find . -name "*.pyc" -delete
 
 lint:
-	$(PYTHON) -m flake8 . --exclude=maze
+	$(PYTHON) -m flake8 .
 	mypy . --explicit-package-bases \
 	        --warn-return-any \
 	        --ignore-missing-imports \
@@ -25,6 +27,6 @@ lint:
 	        --check-untyped-defs
 
 lint-strict:
-	$(PYTHON) -m flake8 . exclude=maze
+	$(PYTHON) -m flake8 .
 	mypy	--strict . \
 	    	--explicit-package-bases
