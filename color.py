@@ -1,50 +1,20 @@
-from enum import Enum
+from coloring_text import Style, Text, Background
 
 
-class Style(Enum):
-    RESET = "0"
-    BOLD = "1"
-    DIM = "2"
-    ITALIC = "3"
-    UNDERLINED = "4"
-    SLOW_BLINKING = "5"
-    FAST_BLINKING = "6"
-    REVERSE = "7"
-    HIDDEN = "8"
-    STRIKETROUGH = "9"
-
-
-class Text(Enum):
-    BLACK = "30"
-    RED = "31"
-    GREEN = "32"
-    YELLOW = "33"
-    BLUE = "34"
-    MAGENTA = "35"
-    CYAN = "36"
-    WHITE = "37"
-
-
-class Background(Enum):
-    BLACK = "40"
-    RED = "41"
-    GREEN = "42"
-    YELLOW = "43"
-    BLUE = "44"
-    MAGENTA = "45"
-    CYAN = "46"
-    WHITE = "47"
-
-
-class ColoringText:
+class Color:
     def __init__(self,
-                 input: str,
                  style: Style,
-                 text: Text,
-                 background: Background)-> str:
-        self.colored_text = f"\033[{style};{text};{background}m{input}\033[0m"
+                 tunnel: Text,
+                 wall: Background,
+                 entry: Background,
+                 exit: Background,
+                 logo: Background,
+                 solution: Background) -> None:
 
-
-if __name__ =="__main__":
-    red = ColoringText("hello", Style.STRIKETROUGH.value, Text.BLACK.value, Background.RED.value)
-    print(red.colored_text)
+        self.style = style
+        self.tunnel = tunnel
+        self.wall = wall
+        self.entry = entry
+        self.exit = exit
+        self.logo = logo
+        self.solution = solution

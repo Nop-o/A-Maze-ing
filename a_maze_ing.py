@@ -1,7 +1,7 @@
 from algo_dfs import DepthFirstSearch
 from parsing.parsing_file import parse_input_file
 import sys
-from image_rendering import MazeDisplay
+from ascii_rendering import ASCIIRendering
 
 
 def a_maze_ing(file_name: str) -> None:
@@ -30,9 +30,9 @@ def a_maze_ing(file_name: str) -> None:
                                hexa_maze, cardinal_path)
     print(dfs.solver())
 
-    MazeDisplay.display_maze_from_hexa2(hexa_maze)
+    ASCIIRendering.display_large_maze(hexa_maze)
     print("\n\n")
-    MazeDisplay.display_maze_from_hexa(hexa_maze)
+    ASCIIRendering.display_thin_maze(hexa_maze)
     dfs.grid.display()
 
 
