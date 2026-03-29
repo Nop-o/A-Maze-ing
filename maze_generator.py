@@ -47,12 +47,12 @@ class MazeGenerator(ABC):
         hexa_maze: list[str] = []
         hexa = "0123456789ABCDEF"
 
-        for ligns in self.grid.cells:
-            new_lign: list[str] = []
-            for cells in ligns:
+        for lines in self.grid.cells:
+            new_line: list[str] = []
+            for cells in lines:
                 new_cell = hexa[cells]
-                new_lign.append(new_cell)
-            hexa_maze.append("".join(new_lign))
+                new_line.append(new_cell)
+            hexa_maze.append("".join(new_line))
 
         return hexa_maze
 

@@ -59,23 +59,23 @@ class ASCIIRendering(Color):
                                                              self.style,
                                                              self.tunnel,
                                                              self.logo)
-        for i, lign_part_1 in enumerate(hexa_maze):
-            lign_part_2: list[str] = []
-            for j in range(len(lign_part_1)):
+        for i, line_part_1 in enumerate(hexa_maze):
+            line_part_2: list[str] = []
+            for j in range(len(line_part_1)):
                 if (j, i) in maze.logo:
-                    print(colored_logo[lign_part_1[j]][0], end="")
-                    lign_part_2.append(colored_logo[lign_part_1[j]][1])
+                    print(colored_logo[line_part_1[j]][0], end="")
+                    line_part_2.append(colored_logo[line_part_1[j]][1])
                 elif (j, i) == maze.entry:
-                    print(colored_entry[lign_part_1[j]][0], end="")
-                    lign_part_2.append(colored_entry[lign_part_1[j]][1])
+                    print(colored_entry[line_part_1[j]][0], end="")
+                    line_part_2.append(colored_entry[line_part_1[j]][1])
                 elif (j, i) == maze.exit:
-                    print(colored_exit[lign_part_1[j]][0], end="")
-                    lign_part_2.append(colored_exit[lign_part_1[j]][1])
+                    print(colored_exit[line_part_1[j]][0], end="")
+                    line_part_2.append(colored_exit[line_part_1[j]][1])
                 else:
-                    print(colored_palette[lign_part_1[j]][0], end="")
-                    lign_part_2.append(colored_palette[lign_part_1[j]][1])
+                    print(colored_palette[line_part_1[j]][0], end="")
+                    line_part_2.append(colored_palette[line_part_1[j]][1])
             print()
-            print("".join(lign_part_2))
+            print("".join(line_part_2))
 
     def display_thin_maze(self,
                           maze: MazeGenerator,
@@ -110,34 +110,34 @@ class ASCIIRendering(Color):
         colored_logo_low = ColoringText("█   ", self.style, self.tunnel,
                                         self.logo)
 
-        for i, lign_part_1 in enumerate(hexa_maze, 0):
-            lign_part_2: list[str] = []
+        for i, line_part_1 in enumerate(hexa_maze, 0):
+            line_part_2: list[str] = []
 
-            for j in range(len(lign_part_1)):
+            for j in range(len(line_part_1)):
                 for key, value in ASCIIRendering.char_list.items():
-                    if lign_part_1[j] in value:
+                    if line_part_1[j] in value:
                         if key == "empty":
                             if ASCIIRendering.is_there_a_corner(hexa_maze,
                                                                 i, i - 1,
                                                                 j, j - 1):
                                 print(colored_corner.colored_text, end="")
-                                lign_part_2.append(colored_void.colored_text)
+                                line_part_2.append(colored_void.colored_text)
                                 break
                         if (j, i) in maze.logo:
                             print(colored_logo_high.colored_text, end="")
-                            lign_part_2.append(colored_logo_low.colored_text)
+                            line_part_2.append(colored_logo_low.colored_text)
                         elif (j, i) == maze.entry:
                             print(colored_entry[key][0], end="")
-                            lign_part_2.append(colored_entry[key][1])
+                            line_part_2.append(colored_entry[key][1])
                         elif (j, i) == maze.exit:
                             print(colored_exit[key][0], end="")
-                            lign_part_2.append(colored_exit[key][1])
+                            line_part_2.append(colored_exit[key][1])
                         else:
                             print(colored_palette[key][0], end="")
-                            lign_part_2.append(colored_palette[key][1])
+                            line_part_2.append(colored_palette[key][1])
 
             print(colored_wall.colored_text)
-            print("".join(lign_part_2), end="")
+            print("".join(line_part_2), end="")
             print(colored_wall.colored_text)
 
         for i in range(len(hexa_maze[0])):
@@ -172,11 +172,11 @@ class ASCIIRendering(Color):
 
         colored_palette: dict[str, tuple[str, str]] = {}
         for key, value in palette.items():
-            first_lign, second_lign = value
-            colored_lign_1 = ColoringText(first_lign, style, text, background)
-            colored_lign_2 = ColoringText(second_lign, style, text, background)
-            colored_palette[key] = (colored_lign_1.colored_text,
-                                    colored_lign_2.colored_text)
+            first_line, second_line = value
+            colored_line_1 = ColoringText(first_line, style, text, background)
+            colored_line_2 = ColoringText(second_line, style, text, background)
+            colored_palette[key] = (colored_line_1.colored_text,
+                                    colored_line_2.colored_text)
 
         return colored_palette
 
