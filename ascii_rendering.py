@@ -127,8 +127,9 @@ class ASCIIRendering(Color):
             for x in range(4):
                 print(colored_roof.colored_text, end="")
         print(colored_roof.colored_text)
-    
-    def is_there_a_hybrid_color_cell(self, maze: MazeGenerator, cell: tuple[int, int]) -> bool:
+
+    def is_there_a_hybrid_color_cell(self, maze: MazeGenerator,
+                                     cell: tuple[int, int]) -> bool:
         x, y = cell
         looking_for: list[tuple[int, int]] = maze.logo
         looking_for.append(maze.entry)
@@ -142,7 +143,7 @@ class ASCIIRendering(Color):
                 if (x, y - 1) in looking_for:
                     return True
         return False
-    
+
     def get_hybrid_color(self, maze: MazeGenerator, cell: tuple[int, int],
                          cell_palette: tuple[str, str],
                          ) -> tuple[ColoringText, ColoringText]:
@@ -150,16 +151,16 @@ class ASCIIRendering(Color):
 
         if y > 0 and (x, y - 1) in maze.entry:
             first_row = ColoringText(cell_palette[0], self.style,
-                                      self.tunnel, self.entry)
+                                     self.tunnel, self.entry)
         elif y > 0 and (x, y - 1) in maze.exit:
             first_row = ColoringText(cell_palette[0], self.style,
-                                      self.tunnel, self.exit)
+                                     self.tunnel, self.exit)
         elif y > 0 and (x, y - 1) in maze.logo:
             first_row = ColoringText(cell_palette[0], self.style,
-                                      self.tunnel, self.logo)
+                                     self.tunnel, self.logo)
         else:
             first_row = ColoringText(cell_palette[0], self.style,
-                                      self.tunnel, self.wall)
+                                     self.tunnel, self.wall)
 
         if x > 0 and (x - 1, y) in maze.entry:
             second_row = ColoringText(cell_palette[1], self.style,
@@ -177,7 +178,7 @@ class ASCIIRendering(Color):
         return (first_row, second_row)
 
     def create_colored_palette(
-            self, 
+            self,
             palette: dict[str, tuple[str, str]],
             background: Background) -> dict[str, tuple[str, str]]:
 
@@ -211,23 +212,6 @@ class ASCIIRendering(Color):
                 return True
         return False
 
-    @staticmethod
-    def create_colored_palette(
-            palette: dict[str, tuple[str, str]],
-            style: Style,
-            text: Text,
-            background: Background) -> dict[str, tuple[str, str]]:
-
-        colored_palette: dict[str, tuple[str, str]] = {}
-        for key, value in palette.items():
-            first_line, second_line = value
-            colored_line_1 = ColoringText(first_line, style, text, background)
-            colored_line_2 = ColoringText(second_line, style, text, background)
-            colored_palette[key] = (colored_line_1.colored_text,
-                                    colored_line_2.colored_text)
-
-        return colored_palette
-
 
 if __name__ == "__main__":
     try:
@@ -241,7 +225,7 @@ if __name__ == "__main__":
                                solution=Background.CYAN)
     except ValueError as e:
         print(e)
-   
+
     ascii.is_there_a_hybrid_color_cell(mg, (3, 3))
     # else:
     #     mg.generate()
