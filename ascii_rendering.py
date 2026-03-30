@@ -82,7 +82,7 @@ class ASCIIRendering(Color):
                 print(cell_first_row, end="")
                 second_row.append(cell_second_row)
             self.display_second_row(second_row)
-        self.display_maze_bottom_row()
+        self.display_maze_bottom_row(hexa_maze)
 
     def get_cell_color(self, maze: MazeGenerator, hexa_maze: list[str],
                        position: tuple[int, int], key: str,
@@ -114,7 +114,7 @@ class ASCIIRendering(Color):
         return colored_palette[key]
 
     def create_colored_palette(
-            self, 
+            self,
             palette: dict[str, tuple[str, str]],
             background: Background) -> dict[str, tuple[str, str]]:
 
@@ -137,7 +137,7 @@ class ASCIIRendering(Color):
         print("".join(second_row), end="")
         print(colored_wall.colored_text)
 
-    def display_maze_bottom_row(self) -> None:
+    def display_maze_bottom_row(self, hexa_maze: list[str]) -> None:
         colored_roof = ColoringText("▀", self.style, self.tunnel,
                                     Background.BLACK)
 
@@ -176,9 +176,9 @@ if __name__ == "__main__":
     else:
         mg.generate()
         hexa_maze = mg.create_hexa_maze()
-        maze_shortest_path = mg.solver()
-        # ascii.display_maze(mg, hexa_maze, True, maze_shortest_path, "thin")
+        solution = mg.solver()
+        ascii.display_maze(mg, hexa_maze, True, solution, "thin")
         print("\n\n")
-        ascii.display_maze(mg, hexa_maze, True, maze_shortest_path, "thin")
+        ascii.display_maze(mg, hexa_maze, True, solution, "large")
     # mg.grid.display()
     # print(hexa_maze)

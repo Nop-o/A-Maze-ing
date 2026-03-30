@@ -16,9 +16,9 @@ def a_maze_ing(file_name: str) -> None:
         maze = DepthFirstSearch(width=maze_setting.width,
                                 height=maze_setting.height,
                                 entry=(maze_setting.entry_x,
-                                    maze_setting.entry_y),
+                                       maze_setting.entry_y),
                                 exit=(maze_setting.exit_x,
-                                    maze_setting.exit_y),
+                                      maze_setting.exit_y),
                                 perfect=maze_setting.is_perfect,
                                 seed=maze_setting.seed,)
         maze_color = ASCIIRendering(style=maze_color.style,
@@ -47,6 +47,25 @@ def a_maze_ing(file_name: str) -> None:
     maze_color.display_large_maze(maze, hexa_maze)
     print("\n\n")
     maze_color.display_thin_maze(maze, hexa_maze)
+
+    print("""
+1. Re-generate a new maze
+2. Show/Hide path from entry to exit
+3. Rotate maze colors
+4. Quit """)
+
+    interface = input("Choice? (1-4)")
+    if interface == '1':
+        a_maze_ing('input.txt')
+    elif interface == '2':
+        pass
+    elif interface == '3':
+        pass
+    elif interface == '4':
+        sys.exit()
+    else:
+        print("Error out of range")
+        sys.exit()
 
 
 if __name__ == "__main__":

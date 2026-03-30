@@ -47,8 +47,8 @@ class DepthFirstSearch(MazeGenerator):
                        and (nx, ny) not in self.logo
                        and (x, y) not in self.logo):
                         self.grid.remove_wall(x, y, direction)
-        if self.verif_3x3():
-            self.grid.add_wall(x, y, direction)
+                        if self.verif_3x3():
+                            self.grid.add_wall(x, y, direction)
 
     def get_unvisited_neighbors(self, cell: tuple[int, int],
                                 visited: set[tuple[int, int]]) -> list[int]:
