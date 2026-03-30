@@ -17,12 +17,10 @@ class MazeGenerator(ABC):
         self.logo = self.get_logo()
 
     @abstractmethod
-    def generate(self) -> Any:
-        pass
+    def generate(self) -> Any: ...
 
     @abstractmethod
-    def solver(self) -> Any:
-        pass
+    def solver(self) -> Any: ...
 
     def verif_3x3(self) -> bool:
         for y in range(self.height - 2):
