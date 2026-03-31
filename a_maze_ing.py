@@ -8,29 +8,32 @@ import sys
 def a_maze_ing(file_name: str) -> None:
     from input_choice import input_choices
     try:
-        maze_setting, maze_color = parse_input_file(file_name)
+        maze_setting, color_setting = parse_input_file(file_name)
     except ValueError as e:
         print(e)
         return
 
     try:
-        maze = DepthFirstSearch(width=maze_setting.width,
-                                height=maze_setting.height,
-                                entry=(maze_setting.entry_x,
-                                       maze_setting.entry_y),
-                                exit=(maze_setting.exit_x,
-                                      maze_setting.exit_y),
-                                perfect=maze_setting.is_perfect,
-                                seed=maze_setting.seed)
-        maze_color = ASCIIRendering(style=maze_color.style,
-                                    wall=maze_color.wall,
-                                    tunnel=maze_color.tunnel,
-                                    entry=maze_color.entry,
-                                    exit=maze_color.exit,
-                                    logo=maze_color.logo,
-                                    solution=maze_color.solution,
-                                    display_mode=maze_color.display_mode,
-                                    display_solution=maze_color.display_solution)
+        maze = DepthFirstSearch(
+            width=maze_setting.width,
+            height=maze_setting.height,
+            entry=(maze_setting.entry_x,
+                   maze_setting.entry_y),
+            exit=(maze_setting.exit_x,
+                  maze_setting.exit_y),
+            perfect=maze_setting.is_perfect,
+            seed=maze_setting.seed)
+
+        maze_color = ASCIIRendering(
+            style=color_setting.style,
+            wall=color_setting.wall,
+            tunnel=color_setting.tunnel,
+            entry=color_setting.entry,
+            exit=color_setting.exit,
+            logo=color_setting.logo,
+            solution=color_setting.solution,
+            display_mode=color_setting.display_mode,
+            display_solution=color_setting.display_solution)
     except Exception as e:
         print(e)
         return
@@ -46,9 +49,10 @@ def a_maze_ing(file_name: str) -> None:
     maze.print_maze_to_file(maze_setting.output_filename,
                             hexa_maze, cardinal_path)
     solution = maze.solver()
-    maze_color.display_maze(maze, hexa_maze, solution)
-    print("\n\n")
-    input_choices(maze, maze_color, hexa_maze, solution, 0)
+    if solution:
+        maze_color.display_maze(maze, hexa_maze, solution)
+        print("\n\n")
+        input_choices(maze, maze_color, hexa_maze, solution, 0)
 
 
 if __name__ == "__main__":

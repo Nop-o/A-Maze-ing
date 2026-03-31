@@ -53,8 +53,7 @@ def transform_input(file_name: str, file_content: list[str]) -> dict[str, Any]:
     return return_value
 
 
-def parse_input_file(file_name: str) -> tuple[ValidFileInput,
-                                              ValidColorInput] | None:
+def parse_input_file(file_name: str) -> tuple[ValidFileInput, ValidColorInput]:
     try:
         file_content = get_file_content(file_name)
         settings = transform_input(file_name, file_content)
@@ -79,7 +78,6 @@ def parse_input_file(file_name: str) -> tuple[ValidFileInput,
                                       display_solution=settings
                                       ["DISPLAY_SOLUTION"],
                                       )
-        print("hello2")
     except ValidationError as e:
         print(e.errors()[0]["msg"])
         sys.exit(-1)

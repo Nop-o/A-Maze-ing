@@ -129,7 +129,7 @@ class ASCIIRendering(Color):
 
         return colored_palette
 
-    def display_second_row(self, second_row: list[ColoringText]) -> None:
+    def display_second_row(self, second_row: list[str]) -> None:
         colored_wall = ColoringText("█", self.style, self.wall, self.tunnel)
 
         print(colored_wall.colored_text)
@@ -191,21 +191,19 @@ class ASCIIRendering(Color):
 
 if __name__ == "__main__":
     try:
-        mg = DepthFirstSearch(25, 25, (0, 0), (20, 20), perfect=True, seed=42,
-                              algorithm="dfs", display_mode="thin",
-                              display_solution=True)
+        mg = DepthFirstSearch(25, 25, (0, 0), (20, 20), perfect=True,
+                              seed=42)
         ascii = ASCIIRendering(style=Style.STRIKETROUGH, wall=Text.WHITE,
                                tunnel=Background.BLACK, logo=Background.BLUE,
                                entry=Background.GREEN, exit=Background.RED,
-                               solution=Background.MAGENTA, display_mode="thin",
-                              display_solution=True)
+                               solution=Background.MAGENTA,
+                               display_mode="thin",
+                               display_solution=True)
     except ValueError as e:
         print(e)
     else:
         mg.generate()
         hexa_maze = mg.create_hexa_maze()
         solution = mg.solver()
-        ascii.display_maze(mg, hexa_maze, solution)
-        print("\n\n")
-    # mg.grid.display()
-    # print(hexa_maze)
+        if solution:
+            ascii.display_maze(mg, hexa_maze, solution)
