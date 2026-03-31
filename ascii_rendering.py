@@ -4,6 +4,7 @@ from coloring_text import ColoringText, Style, Text, Background
 from color import Color
 import sys
 
+
 class ASCIIRendering(Color):
 
     large_palette = {'0': ("    ", "    "),
