@@ -1,11 +1,14 @@
 PYTHON = python3
 MAIN = a_maze_ing.py
 INPUT = input.txt
+VENV = maze
 
 .SILENT:
 
-install:
-	pip install -r requirements.txt
+setup: 
+	$(PYTHON) -m venv $(VENV)
+	$(VENV)/bin/pip install --upgrade pip
+	$(VENV)/bin/pip install -r requirements.txt
 
 run:
 	$(PYTHON) $(MAIN) $(INPUT)
