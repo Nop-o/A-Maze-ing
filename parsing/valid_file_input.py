@@ -12,30 +12,12 @@ class ValidFileInput(BaseModel):
     output_filename: str
     is_perfect: bool
     seed: int | None
-    algorithm: str
-    display_mode: str
-    display_solution: bool
 
     @model_validator(mode='before')
     @classmethod
     def transform_input(cls, data: dict[str, Any]) -> dict[str, Any]:
-        display_list = ["thin", "large"]
-        algorithm_list = ["dfs"]
-
         if data["seed"] == "None":
             data["seed"] = None
-
-        if data["algorithm"] == "None":
-            data["algorithm"] = "dfs"
-        elif data["algorithm"] not in algorithm_list:
-            raise ValueError("This is not a valid algorithm choice.\n "
-                             "The possible choices are dfs and ")
-
-        if data["display_mode"] == "None":
-            data["display_mode"] = "thin"
-        elif data["display_mode"] not in display_list:
-            raise ValueError("This is not a valid maze display choice.\n "
-                             "The possible choices are large and thin")
         return data
 
     @model_validator(mode='after')

@@ -32,7 +32,7 @@ def input_choices(maze: MazeGenerator,
         a_maze_ing('input.txt')
 
     elif interface == '2':
-        maze.display_solution = turn_on_off(maze.display_solution)
+        maze_color.display_solution = turn_on_off(maze_color.display_solution)
         maze_color.display_maze(maze, hexa_maze, maze_solution)
         input_choices(maze, maze_color, hexa_maze, maze_solution, index)
 

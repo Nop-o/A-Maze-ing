@@ -7,19 +7,13 @@ import sys
 class MazeGenerator(ABC):
     def __init__(self, width: int, height: int, entry: tuple[int, int],
                  exit: tuple[int, int] | None,
-                 perfect: bool, seed: int | None,
-                 algorithm: str | None,
-                 display_mode: str | None,
-                 display_solution: bool) -> None:
+                 perfect: bool, seed: int | None) -> None:
         self.width = width
         self.height = height
         self.entry = entry
         self.exit = exit
         self.perfect = perfect
         self.seed = seed
-        self.algorithm = algorithm
-        self.display_mode = display_mode
-        self.display_solution = display_solution
         self.grid = Grid(width, height)
         self.logo = self.get_logo()
 

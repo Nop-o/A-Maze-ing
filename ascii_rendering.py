@@ -51,15 +51,18 @@ class ASCIIRendering(Color):
                  entry: Background,
                  exit: Background,
                  logo: Background,
-                 solution: Background) -> None:
-        super().__init__(style, wall, tunnel, entry, exit, logo, solution)
+                 solution: Background,
+                 display_mode: str,
+                 display_solution: bool) -> None:
+        super().__init__(style, wall, tunnel, entry, exit, logo, solution,
+                         display_mode, display_solution)
 
     def display_maze(self,
                      maze: MazeGenerator,
                      hexa_maze: list[str],
                      maze_solution: list[tuple[int, int]]) -> None:
 
-        if maze.display_mode == "thin":
+        if self.display_mode == "thin":
             palette = ASCIIRendering.thin_palette
         else:
             palette = ASCIIRendering.large_palette
@@ -96,7 +99,7 @@ class ASCIIRendering(Color):
         elif (x, y) == maze.exit:
             colored_exit = self.create_colored_palette(palette, self.exit)
             return colored_exit[key]
-        elif maze.display_solution and (x, y) in maze_solution:
+        elif self.display_solution and (x, y) in maze_solution:
             colored_solution = self.create_colored_palette(palette,
                                                            self.solution)
             return colored_solution[key]
@@ -161,23 +164,28 @@ class ASCIIRendering(Color):
         set1 = ASCIIRendering(style=Style.BOLD, wall=Text.WHITE,
                               tunnel=Background.BLACK, logo=Background.RED,
                               entry=Background.GREEN, exit=Background.BLUE,
-                              solution=Background.CYAN)
+                              solution=Background.CYAN, display_mode="thin",
+                              display_solution=True)
         set2 = ASCIIRendering(style=Style.BOLD, wall=Text.YELLOW,
                               tunnel=Background.WHITE, logo=Background.GREEN,
                               entry=Background.RED, exit=Background.MAGENTA,
-                              solution=Background.BLACK)
+                              solution=Background.BLACK, display_mode="thin",
+                              display_solution=True)
         set3 = ASCIIRendering(style=Style.BOLD, wall=Text.GREEN,
                               tunnel=Background.RED, logo=Background.BLUE,
                               entry=Background.WHITE, exit=Background.BLACK,
-                              solution=Background.MAGENTA)
+                              solution=Background.MAGENTA, display_mode="thin",
+                              display_solution=True)
         set4 = ASCIIRendering(style=Style.BOLD, wall=Text.GREEN,
                               tunnel=Background.BLACK, logo=Background.MAGENTA,
                               entry=Background.RED, exit=Background.WHITE,
-                              solution=Background.BLUE)
+                              solution=Background.BLUE, display_mode="thin",
+                              display_solution=True)
         set5 = ASCIIRendering(style=Style.BOLD, wall=Text.BLACK,
                               tunnel=Background.YELLOW, logo=Background.WHITE,
                               entry=Background.MAGENTA, exit=Background.RED,
-                              solution=Background.GREEN)
+                              solution=Background.GREEN, display_mode="thin",
+                              display_solution=True)
         return [set1, set2, set3, set4, set5]
 
 
@@ -189,7 +197,8 @@ if __name__ == "__main__":
         ascii = ASCIIRendering(style=Style.STRIKETROUGH, wall=Text.WHITE,
                                tunnel=Background.BLACK, logo=Background.BLUE,
                                entry=Background.GREEN, exit=Background.RED,
-                               solution=Background.MAGENTA)
+                               solution=Background.MAGENTA, display_mode="thin",
+                              display_solution=True)
     except ValueError as e:
         print(e)
     else:

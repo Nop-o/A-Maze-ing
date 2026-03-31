@@ -9,7 +9,9 @@ class Color:
                  entry: Background,
                  exit: Background,
                  logo: Background,
-                 solution: Background) -> None:
+                 solution: Background,
+                 display_mode: str,
+                 display_solution: bool) -> None:
 
         self.style = style
         self.tunnel = tunnel
@@ -18,3 +20,5 @@ class Color:
         self.exit = exit
         self.logo = logo
         self.solution = solution
+        self.display_mode = display_mode
+        self.display_solution = display_solution

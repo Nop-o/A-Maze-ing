@@ -8,7 +8,6 @@ def possible_file_input_error_message() -> None:
           "OUTPUT_FILE=input\n"
           "PERFECT=False\n"
           "SEED=None\n"
-          "ALGORITHM=None\n"
           "DISPLAY_MODE=None\n"
           "DISPLAY_SOLUTION=TRUE\n"
           "STYLE=None\n"

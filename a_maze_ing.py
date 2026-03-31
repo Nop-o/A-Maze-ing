@@ -21,17 +21,16 @@ def a_maze_ing(file_name: str) -> None:
                                 exit=(maze_setting.exit_x,
                                       maze_setting.exit_y),
                                 perfect=maze_setting.is_perfect,
-                                seed=maze_setting.seed,
-                                algorithm=maze_setting.algorithm,
-                                display_mode=maze_setting.display_mode,
-                                display_solution=maze_setting.display_solution)
+                                seed=maze_setting.seed)
         maze_color = ASCIIRendering(style=maze_color.style,
                                     wall=maze_color.wall,
                                     tunnel=maze_color.tunnel,
                                     entry=maze_color.entry,
                                     exit=maze_color.exit,
                                     logo=maze_color.logo,
-                                    solution=maze_color.solution,)
+                                    solution=maze_color.solution,
+                                    display_mode=maze_color.display_mode,
+                                    display_solution=maze_color.display_solution)
     except Exception as e:
         print(e)
         return

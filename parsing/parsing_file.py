@@ -14,8 +14,8 @@ def get_file_content(file_name: str) -> list[str]:
 
 def transform_input(file_name: str, file_content: list[str]) -> dict[str, Any]:
     settings = ["WIDTH", "HEIGHT", "ENTRY", "EXIT", "OUTPUT_FILE", "PERFECT",
-                "SEED", "ALGORITHM", "DISPLAY_MODE", "DISPLAY_SOLUTION",
-                "STYLE", "WALL_COLOR", "TUNNEL_COLOR", "ENTRY_COLOR",
+                "SEED", "DISPLAY_MODE", "DISPLAY_SOLUTION", "STYLE",
+                "WALL_COLOR", "TUNNEL_COLOR", "ENTRY_COLOR",
                 "EXIT_COLOR", "LOGO_COLOR", "SOLUTION_COLOR"]
 
     return_value: dict[str, Any] = {}
@@ -67,10 +67,6 @@ def parse_input_file(file_name: str) -> tuple[ValidFileInput,
                                     output_filename=settings["OUTPUT_FILE"],
                                     is_perfect=settings["PERFECT"],
                                     seed=settings["SEED"],
-                                    algorithm=settings["ALGORITHM"],
-                                    display_mode=settings["DISPLAY_MODE"],
-                                    display_solution=settings
-                                    ["DISPLAY_SOLUTION"],
                                     )
         color_input = ValidColorInput(style=settings["STYLE"],
                                       wall=settings["WALL_COLOR"],
@@ -79,7 +75,11 @@ def parse_input_file(file_name: str) -> tuple[ValidFileInput,
                                       exit=settings["EXIT_COLOR"],
                                       logo=settings["LOGO_COLOR"],
                                       solution=settings["SOLUTION_COLOR"],
+                                      display_mode=settings["DISPLAY_MODE"],
+                                      display_solution=settings
+                                      ["DISPLAY_SOLUTION"],
                                       )
+        print("hello2")
     except ValidationError as e:
         print(e.errors()[0]["msg"])
         sys.exit(-1)
