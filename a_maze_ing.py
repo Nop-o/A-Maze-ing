@@ -49,16 +49,20 @@ def a_maze_ing(file_name: str) -> int:
         return (-1)
     maze.print_maze_to_file(maze_setting.output_filename,
                             hexa_maze, cardinal_path)
+
     solution = maze.solver()
     if not solution:
         print("Couldn't find the maze's solution.",
               file=sys.stderr)
         return (-1)
+
     maze_color.display_maze(maze, hexa_maze, solution)
     print("\n\n")
-    input_choices(maze, maze_color, hexa_maze, solution, 0)
+    try:
+        input_choices(maze, maze_color, hexa_maze, solution, 0)
+    except (KeyboardInterrupt, EOFError):
+        return (0)
     return (0)
-
 
 if __name__ == "__main__":
     if len(sys.argv) > 2:

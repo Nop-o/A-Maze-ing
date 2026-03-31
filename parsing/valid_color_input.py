@@ -28,7 +28,7 @@ class ValidColorInput(BaseModel):
         for key, value in data.items():
             if value == "None":
                 if key in style_settings:
-                    data[key] = random.choice(list(Style))
+                    data[key] = Style.BOLD
                 elif key in text_settings:
                     index = random.choice(shared_color)
                     data[key] = text_color[index]

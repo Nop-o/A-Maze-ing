@@ -2,7 +2,7 @@ from a_maze_ing import a_maze_ing
 import sys
 from maze_generator import MazeGenerator
 from ascii_rendering import ASCIIRendering
-
+import os
 
 def turn_on_off(switch: bool) -> bool:
     if switch is True:
@@ -27,7 +27,9 @@ def input_choices(maze: MazeGenerator,
 3. Rotate maze colors
 4. Quit """)
 
+
     interface = input("Choice? (1-4)")
+    os.system("clear")
     if interface == '1':
         a_maze_ing('input.txt')
 
@@ -47,6 +49,5 @@ def input_choices(maze: MazeGenerator,
         sys.exit()
 
     else:
-        print("Error out of range",
-              file=sys.stderr)
-        sys.exit()
+        maze_color.display_maze(maze, hexa_maze, maze_solution)
+        input_choices(maze, maze_color, hexa_maze, maze_solution, index)
