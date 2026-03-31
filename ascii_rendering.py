@@ -68,13 +68,13 @@ class ASCIIRendering(Color):
             second_row: list[str] = []
 
             for x, column in enumerate(line):
-                func = self.get_cell_color()
-                cell_first_row, cell_second_row = func(maze,
-                                                       hexa_maze,
-                                                       (x, y),
-                                                       column,
-                                                       palette,
-                                                       maze_solution)
+                func_get_cell_color = self.get_cell_color(maze,
+                                                          hexa_maze,
+                                                          (x, y),
+                                                          column,
+                                                          palette,
+                                                          maze_solution)
+                cell_first_row, cell_second_row = func_get_cell_color
                 print(cell_first_row, end="")
                 second_row.append(cell_second_row)
             self.display_second_row(second_row)

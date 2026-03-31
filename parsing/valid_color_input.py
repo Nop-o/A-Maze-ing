@@ -41,5 +41,5 @@ class ValidColorInput(BaseModel):
                 elif key in text_settings:
                     data[key] = Text(value)
                 elif key in background_settings:
-                    data[key] = Background(value) 
+                    data[key] = Background(value)
         return data

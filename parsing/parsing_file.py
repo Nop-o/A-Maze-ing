@@ -3,6 +3,7 @@ from parsing import ValidFileInput, ValidColorInput
 from pydantic import ValidationError
 import sys
 
+
 def get_file_content(file_name: str) -> list[str]:
     with open(file_name, 'r') as file:
         content = file.readlines()
@@ -14,7 +15,7 @@ def get_file_content(file_name: str) -> list[str]:
 def transform_input(file_name: str, file_content: list[str]) -> dict[str, Any]:
     settings = ["WIDTH", "HEIGHT", "ENTRY", "EXIT", "OUTPUT_FILE", "PERFECT",
                 "SEED", "ALGORITHM", "DISPLAY_MODE", "DISPLAY_SOLUTION",
-                "STYLE", "WALL_COLOR", "TUNNEL_COLOR","ENTRY_COLOR",
+                "STYLE", "WALL_COLOR", "TUNNEL_COLOR", "ENTRY_COLOR",
                 "EXIT_COLOR", "LOGO_COLOR", "SOLUTION_COLOR"]
 
     return_value: dict[str, Any] = {}
@@ -52,8 +53,8 @@ def transform_input(file_name: str, file_content: list[str]) -> dict[str, Any]:
     return return_value
 
 
-def parse_input_file(file_name: str
-        ) -> tuple[ValidFileInput, ValidColorInput] | None:
+def parse_input_file(file_name: str) -> tuple[ValidFileInput,
+                                              ValidColorInput] | None:
     try:
         file_content = get_file_content(file_name)
         settings = transform_input(file_name, file_content)
@@ -68,7 +69,8 @@ def parse_input_file(file_name: str
                                     seed=settings["SEED"],
                                     algorithm=settings["ALGORITHM"],
                                     display_mode=settings["DISPLAY_MODE"],
-                                    display_solution=settings["DISPLAY_SOLUTION"],
+                                    display_solution=settings
+                                    ["DISPLAY_SOLUTION"],
                                     )
         color_input = ValidColorInput(style=settings["STYLE"],
                                       wall=settings["WALL_COLOR"],
@@ -77,7 +79,7 @@ def parse_input_file(file_name: str
                                       exit=settings["EXIT_COLOR"],
                                       logo=settings["LOGO_COLOR"],
                                       solution=settings["SOLUTION_COLOR"],
-                                     )
+                                      )
     except ValidationError as e:
         print(e.errors()[0]["msg"])
         sys.exit(-1)
