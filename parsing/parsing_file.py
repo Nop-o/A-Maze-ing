@@ -1,7 +1,7 @@
 from typing import Any
 from parsing import ValidFileInput, ValidColorInput
 from pydantic import ValidationError
-
+import sys
 
 def get_file_content(file_name: str) -> list[str]:
     with open(file_name, 'r') as file:
@@ -13,9 +13,9 @@ def get_file_content(file_name: str) -> list[str]:
 
 def transform_input(file_name: str, file_content: list[str]) -> dict[str, Any]:
     settings = ["WIDTH", "HEIGHT", "ENTRY", "EXIT", "OUTPUT_FILE", "PERFECT",
-                "SEED", "ALGORITHM", "DISPLAY_MODE", "STYLE", "TUNNEL_COLOR",
-                "WALL_COLOR","ENTRY_COLOR", "EXIT_COLOR", "LOGO_COLOR",
-                "SOLUTION_COLOR"]
+                "SEED", "ALGORITHM", "DISPLAY_MODE", "DISPLAY_SOLUTION",
+                "STYLE", "WALL_COLOR", "TUNNEL_COLOR","ENTRY_COLOR",
+                "EXIT_COLOR", "LOGO_COLOR", "SOLUTION_COLOR"]
 
     return_value: dict[str, Any] = {}
     for data in file_content:
@@ -57,7 +57,6 @@ def parse_input_file(file_name: str
     try:
         file_content = get_file_content(file_name)
         settings = transform_input(file_name, file_content)
-        
         maze_input = ValidFileInput(width=settings["WIDTH"],
                                     height=settings["HEIGHT"],
                                     entry_x=settings["ENTRY"][0],
@@ -68,20 +67,23 @@ def parse_input_file(file_name: str
                                     is_perfect=settings["PERFECT"],
                                     seed=settings["SEED"],
                                     algorithm=settings["ALGORITHM"],
-                                    display_mode=settings["DISPLAY_MODE"]
+                                    display_mode=settings["DISPLAY_MODE"],
+                                    display_solution=settings["DISPLAY_SOLUTION"],
                                     )
         color_input = ValidColorInput(style=settings["STYLE"],
-                                      tunnel=settings["TUNNEL_COLOR"],
                                       wall=settings["WALL_COLOR"],
+                                      tunnel=settings["TUNNEL_COLOR"],
                                       entry=settings["ENTRY_COLOR"],
                                       exit=settings["EXIT_COLOR"],
                                       logo=settings["LOGO_COLOR"],
                                       solution=settings["SOLUTION_COLOR"],
                                      )
-    except (ValidationError, FileNotFoundError,
-            ValueError, AttributeError) as e:
+    except ValidationError as e:
+        print(e.errors()[0]["msg"])
+        sys.exit(-1)
+    except Exception as e:
         print(e)
-        return None
+        sys.exit(-1)
 
     return (maze_input, color_input)
 

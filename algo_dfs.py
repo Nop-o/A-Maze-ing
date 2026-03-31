@@ -7,8 +7,10 @@ import sys
 
 class DepthFirstSearch(MazeGenerator):
     def __init__(self, width: int, height: int, entry: tuple[int, int],
-                 exit: tuple[int, int], perfect: bool, seed: int | None):
-        super().__init__(width, height, entry, exit, perfect, seed)
+                 exit: tuple[int, int], perfect: bool, seed: int | None,
+                 algorithm: str, display_mode: str, display_solution: bool):
+        super().__init__(width, height, entry, exit, perfect, seed,
+                         algorithm, display_mode, display_solution)
         if seed is not None:
             random.seed(seed)
 

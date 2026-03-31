@@ -1,18 +1,25 @@
 from grid import Grid
 from abc import ABC, abstractmethod
 from typing import Any
+import sys
 
 
 class MazeGenerator(ABC):
     def __init__(self, width: int, height: int, entry: tuple[int, int],
                  exit: tuple[int, int] | None,
-                 perfect: bool, seed: int | None) -> None:
+                 perfect: bool, seed: int | None,
+                 algorithm: str | None,
+                 display_mode: str | None,
+                 display_solution = bool) -> None:
         self.width = width
         self.height = height
         self.entry = entry
         self.exit = exit
         self.perfect = perfect
         self.seed = seed
+        self.algorithm = algorithm
+        self.display_mode = display_mode
+        self.display_solution = display_solution
         self.grid = Grid(width, height)
         self.logo = self.get_logo()
 
@@ -71,6 +78,7 @@ class MazeGenerator(ABC):
                 file.write(entry_to_exit_path + '\n')
         except OSError as e:
             print(e)
+            sys.exit(-1)
 
     def find_cardinal_path(self, path: list[tuple[int, int]] | None) -> str:
         if path is None:

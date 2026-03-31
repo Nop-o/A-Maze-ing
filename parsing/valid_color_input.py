@@ -6,8 +6,8 @@ import random
 
 class ValidColorInput(BaseModel):
     style: Style
-    tunnel: Text
-    wall: Background
+    wall: Text
+    tunnel: Background
     entry: Background
     exit: Background
     logo: Background
@@ -15,19 +15,26 @@ class ValidColorInput(BaseModel):
 
     @model_validator(mode='before')
     @classmethod
-    def tranform_input(cls, data: dict[str, Any]) -> dict[str, Any]:
+    def transform_input(cls, data: dict[str, Any]) -> dict[str, Any]:
         style_settings = ["style"]
-        text_settings = ["tunnel"]
-        background_settings = ["wall", "entry", "exit", "logo", "solution"]
+        text_settings = ["wall"]
+        background_settings = ["tunnel", "entry", "exit", "logo", "solution"]
+        text_color = list(Text)
+        background_color = list(Background)
+        shared_color = list(range(len(Text)))
 
         for key, value in data.items():
             if value == "None":
                 if key in style_settings:
                     data[key] = random.choice(list(Style))
                 elif key in text_settings:
-                    data[key] = random.choice(list(Text))
+                    index = random.choice(shared_color)
+                    data[key] = text_color[index]
+                    shared_color.remove(index)
                 elif key in background_settings:
-                    data[key] = random.choice(list(Background))
+                    index = random.choice(shared_color)
+                    data[key] = background_color[index]
+                    shared_color.remove(index)
             else:
                 if key in style_settings:
                     data[key] = Style(value)

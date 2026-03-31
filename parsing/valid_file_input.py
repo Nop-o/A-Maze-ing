@@ -12,13 +12,14 @@ class ValidFileInput(BaseModel):
     output_filename: str
     is_perfect: bool
     seed: int | None
-    algorithm: str | None
-    display_mode: str | None
+    algorithm: str
+    display_mode: str
+    display_solution: bool
 
     @model_validator(mode='before')
     @classmethod
     def transform_input(cls, data: dict[str, Any]) -> dict[str, Any]:
-        display_list = ["ascii_thin", "ascii_large", "mlx"]
+        display_list = ["thin", "large"]
         algorithm_list = ["dfs"]
 
         if data["seed"] == "None":
@@ -31,11 +32,10 @@ class ValidFileInput(BaseModel):
                              "The possible choices are dfs and ")
 
         if data["display_mode"] == "None":
-            data["display_mode"] = "ascii_thin"
+            data["display_mode"] = "thin"
         elif data["display_mode"] not in display_list:
             raise ValueError("This is not a valid maze display choice.\n "
-                             "The possible choices are ascii_large, ascii_thin"
-                             " and mlx.")
+                             "The possible choices are large and thin")
         return data
 
     @model_validator(mode='after')

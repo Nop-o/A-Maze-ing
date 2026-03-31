@@ -4,8 +4,8 @@ from coloring_text import Style, Text, Background
 class Color:
     def __init__(self,
                  style: Style,
-                 tunnel: Text,
-                 wall: Background,
+                 wall: Text,
+                 tunnel: Background,
                  entry: Background,
                  exit: Background,
                  logo: Background,

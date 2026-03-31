@@ -1,11 +1,12 @@
 from parsing.parsing_file import parse_input_file
+from error_message import possible_file_input_error_message
 from algo_dfs import DepthFirstSearch
-import sys
 from ascii_rendering import ASCIIRendering
+import sys
 
 
 def a_maze_ing(file_name: str) -> None:
-
+    from input_choice import input_choices
     try:
         maze_setting, maze_color = parse_input_file(file_name)
     except ValueError as e:
@@ -20,10 +21,13 @@ def a_maze_ing(file_name: str) -> None:
                                 exit=(maze_setting.exit_x,
                                       maze_setting.exit_y),
                                 perfect=maze_setting.is_perfect,
-                                seed=maze_setting.seed,)
+                                seed=maze_setting.seed,
+                                algorithm=maze_setting.algorithm,
+                                display_mode=maze_setting.display_mode,
+                                display_solution=maze_setting.display_solution)
         maze_color = ASCIIRendering(style=maze_color.style,
-                                    tunnel=maze_color.tunnel,
                                     wall=maze_color.wall,
+                                    tunnel=maze_color.tunnel,
                                     entry=maze_color.entry,
                                     exit=maze_color.exit,
                                     logo=maze_color.logo,
@@ -42,34 +46,22 @@ def a_maze_ing(file_name: str) -> None:
         return
     maze.print_maze_to_file(maze_setting.output_filename,
                             hexa_maze, cardinal_path)
-    print(maze.solver())
-
-    maze_color.display_large_maze(maze, hexa_maze)
+    solution = maze.solver()
+    maze_color.display_maze(maze, hexa_maze, solution)
     print("\n\n")
-    maze_color.display_thin_maze(maze, hexa_maze)
+    input_choices(maze, maze_color, hexa_maze, solution, 0)
 
-    print("""
-1. Re-generate a new maze
-2. Show/Hide path from entry to exit
-3. Rotate maze colors
-4. Quit """)
-
-    interface = input("Choice? (1-4)")
-    if interface == '1':
-        a_maze_ing('input.txt')
-    elif interface == '2':
-        pass
-    elif interface == '3':
-        pass
-    elif interface == '4':
-        sys.exit()
-    else:
-        print("Error out of range")
-        sys.exit()
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("bye")
+    if len(sys.argv) > 2:
+        print("You can't have more than 1 argument.\n")
+        possible_file_input_error_message()
         sys.exit(-1)
+
+    if len(sys.argv) == 1:
+        print("You can't have no argument.")
+        possible_file_input_error_message()
+        sys.exit(-1)
+
     a_maze_ing(sys.argv[1])
