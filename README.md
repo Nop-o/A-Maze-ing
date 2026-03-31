@@ -42,7 +42,7 @@ The configuration file uses KEY=VALUE format. Lines starting with # are comments
 
 ## Algorithm
 
-### Choice : Recursive Backtracker (DFS)
+### Choice : Iterative Backtracker (DFS)
 
 The maze is generated using a depth-first search algorithm with backtracking.
 
