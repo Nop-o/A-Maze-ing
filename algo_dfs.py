@@ -111,7 +111,7 @@ if __name__ == "__main__":
     try:
         dfs = DepthFirstSearch(10, 10, (2, 4), (9, 9), perfect=True, seed=42)
     except ValueError as e:
-        print(e)
+        print(e, file=sys.stderr)
         sys.exit()
 
     print(dfs.exit)

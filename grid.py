@@ -51,7 +51,7 @@ class Grid:
         return False
 
     def display(self) -> None:
-        # ffunction that tests the grid by displaying in ASCII
+        # function that tests the grid by displaying in ASCII
         print("+" + "---+" * self.width)  # top line
 
         for y in range(self.height):  # middle line

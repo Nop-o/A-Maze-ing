@@ -47,5 +47,6 @@ def input_choices(maze: MazeGenerator,
         sys.exit()
 
     else:
-        print("Error out of range")
+        print("Error out of range",
+        file=sys.stderr)
         sys.exit()

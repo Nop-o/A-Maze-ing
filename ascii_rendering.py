@@ -2,7 +2,7 @@ from algo_dfs import DepthFirstSearch
 from maze_generator import MazeGenerator
 from coloring_text import ColoringText, Style, Text, Background
 from color import Color
-
+import sys
 
 class ASCIIRendering(Color):
 
@@ -200,7 +200,7 @@ if __name__ == "__main__":
                                display_mode="thin",
                                display_solution=True)
     except ValueError as e:
-        print(e)
+        print(e, file=sys.stderr)
     else:
         mg.generate()
         hexa_maze = mg.create_hexa_maze()

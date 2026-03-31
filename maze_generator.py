@@ -71,7 +71,7 @@ class MazeGenerator(ABC):
                 file.write(f"{x2},{y2}\n")
                 file.write(entry_to_exit_path + '\n')
         except OSError as e:
-            print(e)
+            print(e, file=sys.stderr)
             sys.exit(-1)
 
     def find_cardinal_path(self, path: list[tuple[int, int]] | None) -> str:

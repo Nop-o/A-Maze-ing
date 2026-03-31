@@ -79,10 +79,10 @@ def parse_input_file(file_name: str) -> tuple[ValidFileInput, ValidColorInput]:
                                       ["DISPLAY_SOLUTION"],
                                       )
     except ValidationError as e:
-        print(e.errors()[0]["msg"])
+        print(e.errors()[0]["msg"], file=sys.stderr)
         sys.exit(-1)
     except Exception as e:
-        print(e)
+        print(e, file=sys.stderr)
         sys.exit(-1)
 
     return (maze_input, color_input)

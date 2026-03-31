@@ -1,3 +1,6 @@
+import sys
+
+
 def possible_file_input_error_message() -> None:
     print("You need to create a custom input file\n"
           "You can create a specific maze or use this one:\n"
@@ -16,4 +19,5 @@ def possible_file_input_error_message() -> None:
           "ENTRY_COLOR=None\n"
           "EXIT_COLOR=None\n"
           "LOGO_COLOR=None\n"
-          "SOLUTION_COLOR=None\n")
+          "SOLUTION_COLOR=None",
+          file=sys.stderr)

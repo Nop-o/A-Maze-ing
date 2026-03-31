@@ -7,10 +7,11 @@ import sys
 
 def a_maze_ing(file_name: str) -> None:
     from input_choice import input_choices
+
     try:
         maze_setting, color_setting = parse_input_file(file_name)
     except ValueError as e:
-        print(e)
+        print(e, file=sys.stderr)
         return
 
     try:
@@ -35,7 +36,7 @@ def a_maze_ing(file_name: str) -> None:
             display_mode=color_setting.display_mode,
             display_solution=color_setting.display_solution)
     except Exception as e:
-        print(e)
+        print(e, file=sys.stderr)
         return
 
     maze.generate()
@@ -44,25 +45,30 @@ def a_maze_ing(file_name: str) -> None:
     try:
         cardinal_path = maze.find_cardinal_path(perfect_maze_path)
     except ValueError as e:
-        print(e)
+        print(e, file=sys.stderr)
         return
     maze.print_maze_to_file(maze_setting.output_filename,
                             hexa_maze, cardinal_path)
     solution = maze.solver()
-    if solution:
-        maze_color.display_maze(maze, hexa_maze, solution)
-        print("\n\n")
-        input_choices(maze, maze_color, hexa_maze, solution, 0)
+    if not solution:
+        print("Couldn't find the maze's solution.",
+        file=sys.stderr)
+        return(-1)
+    maze_color.display_maze(maze, hexa_maze, solution)
+    print("\n\n")
+    input_choices(maze, maze_color, hexa_maze, solution, 0)
 
 
 if __name__ == "__main__":
     if len(sys.argv) > 2:
-        print("You can't have more than 1 argument.\n")
+        print("You can't have more than 1 argument.\n",
+        file=sys.stderr)
         possible_file_input_error_message()
         sys.exit(-1)
 
     if len(sys.argv) == 1:
-        print("You can't have no argument.")
+        print("You can't have no argument.",
+        file=sys.stderr)
         possible_file_input_error_message()
         sys.exit(-1)
 
