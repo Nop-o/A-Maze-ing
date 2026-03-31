@@ -52,7 +52,6 @@ def a_maze_ing(file_name: str) -> None:
     input_choices(maze, maze_color, hexa_maze, solution, 0)
 
 
-
 if __name__ == "__main__":
     if len(sys.argv) > 2:
         print("You can't have more than 1 argument.\n")

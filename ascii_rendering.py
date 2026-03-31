@@ -7,42 +7,42 @@ from color import Color
 class ASCIIRendering(Color):
 
     large_palette = {'0': ("    ", "    "),
-                '1': ("▀▀▀▀", "    "),
-                '2': ("   █", "   █"),
-                '3': ("▀▀▀█", "   █"),
-                '4': ("    ", "▄▄▄▄"),
-                '5': ("▀▀▀▀", "▄▄▄▄"),
-                '6': ("   █", "▄▄▄█"),
-                '7': ("▀▀▀█", "▄▄▄█"),
-                '8': ("█   ", "█   "),
-                '9': ("█▀▀▀", "█   "),
-                'A': ("█  █", "█  █"),
-                'B': ("█▀▀█", "█  █"),
-                'C': ("█   ", "█▄▄▄"),
-                'D': ("█▀▀▀", "█▄▄▄"),
-                'E': ("█  █", "█▄▄█"),
-                'F': ("█▀▀█", "█▄▄█"),
-                'corner': ("▀   ", "    "),
-                }
+                     '1': ("▀▀▀▀", "    "),
+                     '2': ("   █", "   █"),
+                     '3': ("▀▀▀█", "   █"),
+                     '4': ("    ", "▄▄▄▄"),
+                     '5': ("▀▀▀▀", "▄▄▄▄"),
+                     '6': ("   █", "▄▄▄█"),
+                     '7': ("▀▀▀█", "▄▄▄█"),
+                     '8': ("█   ", "█   "),
+                     '9': ("█▀▀▀", "█   "),
+                     'A': ("█  █", "█  █"),
+                     'B': ("█▀▀█", "█  █"),
+                     'C': ("█   ", "█▄▄▄"),
+                     'D': ("█▀▀▀", "█▄▄▄"),
+                     'E': ("█  █", "█▄▄█"),
+                     'F': ("█▀▀█", "█▄▄█"),
+                     'corner': ("▀   ", "    "),
+                     }
 
     thin_palette = {'0': ("    ", "    "),
-                '1': ("▀▀▀▀", "    "),
-                '2': ("    ", "    "),
-                '3': ("▀▀▀▀", "    "),
-                '4': ("    ", "    "),
-                '5': ("▀▀▀▀", "    "),
-                '6': ("    ", "    "),
-                '7': ("▀▀▀▀", "    "),
-                '8': ("█   ", "█   "),
-                '9': ("█▀▀▀", "█   "),
-                'A': ("█   ", "█   "),
-                'B': ("█▀▀▀", "█   "),
-                'C': ("█   ", "█   "),
-                'D': ("█▀▀▀", "█   "),
-                'E': ("█   ", "█   "),
-                'F': ("█▀▀▀", "█   "),
-                'corner': ("▀   ", "    "),
-                }
+                    '1': ("▀▀▀▀", "    "),
+                    '2': ("    ", "    "),
+                    '3': ("▀▀▀▀", "    "),
+                    '4': ("    ", "    "),
+                    '5': ("▀▀▀▀", "    "),
+                    '6': ("    ", "    "),
+                    '7': ("▀▀▀▀", "    "),
+                    '8': ("█   ", "█   "),
+                    '9': ("█▀▀▀", "█   "),
+                    'A': ("█   ", "█   "),
+                    'B': ("█▀▀▀", "█   "),
+                    'C': ("█   ", "█   "),
+                    'D': ("█▀▀▀", "█   "),
+                    'E': ("█   ", "█   "),
+                    'F': ("█▀▀▀", "█   "),
+                    'corner': ("▀   ", "    "),
+                    }
 
     def __init__(self,
                  style: Style,
@@ -68,12 +68,13 @@ class ASCIIRendering(Color):
             second_row: list[str] = []
 
             for x, column in enumerate(line):
-                cell_first_row, cell_second_row = self.get_cell_color(maze,
-                                                                      hexa_maze,
-                                                                      (x, y),
-                                                                      column,
-                                                                      palette,
-                                                                      maze_solution)
+                func = self.get_cell_color()
+                cell_first_row, cell_second_row = func(maze,
+                                                       hexa_maze,
+                                                       (x, y),
+                                                       column,
+                                                       palette,
+                                                       maze_solution)
                 print(cell_first_row, end="")
                 second_row.append(cell_second_row)
             self.display_second_row(second_row)
@@ -96,7 +97,7 @@ class ASCIIRendering(Color):
             colored_exit = self.create_colored_palette(palette, self.exit)
             return colored_exit[key]
         elif maze.display_solution and (x, y) in maze_solution:
-            colored_solution = self.create_colored_palette(palette, 
+            colored_solution = self.create_colored_palette(palette,
                                                            self.solution)
             return colored_solution[key]
         elif key in ("0", "2", "4", "6"):
@@ -180,19 +181,17 @@ class ASCIIRendering(Color):
         return [set1, set2, set3, set4, set5]
 
 
-
-
 if __name__ == "__main__":
     try:
         mg = DepthFirstSearch(25, 25, (0, 0), (20, 20), perfect=True, seed=42,
                               algorithm="dfs", display_mode="thin",
                               display_solution=True)
         ascii = ASCIIRendering(style=Style.STRIKETROUGH, wall=Text.WHITE,
-                              tunnel=Background.BLACK, logo=Background.BLUE,
-                              entry=Background.GREEN, exit=Background.RED,
-                              solution=Background.MAGENTA)
+                               tunnel=Background.BLACK, logo=Background.BLUE,
+                               entry=Background.GREEN, exit=Background.RED,
+                               solution=Background.MAGENTA)
     except ValueError as e:
-        print(e)   
+        print(e)
     else:
         mg.generate()
         hexa_maze = mg.create_hexa_maze()

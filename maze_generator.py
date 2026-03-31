@@ -10,7 +10,7 @@ class MazeGenerator(ABC):
                  perfect: bool, seed: int | None,
                  algorithm: str | None,
                  display_mode: str | None,
-                 display_solution = bool) -> None:
+                 display_solution: bool) -> None:
         self.width = width
         self.height = height
         self.entry = entry
