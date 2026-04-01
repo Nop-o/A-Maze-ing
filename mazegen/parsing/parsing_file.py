@@ -1,5 +1,5 @@
 from typing import Any
-from parsing import ValidFileInput, ValidColorInput
+from mazegen.parsing import ValidFileInput, ValidColorInput
 from pydantic import ValidationError
 import sys
 

@@ -2,4 +2,4 @@ maze/
 __pycache__/
 .mypy_cache/
 *.pyc
-*.txt
+.txt

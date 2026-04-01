@@ -1,7 +1,7 @@
 from a_maze_ing import a_maze_ing
 import sys
-from maze_generator import MazeGenerator
-from ascii_rendering import ASCIIRendering
+from mazegen.maze_generator import MazeGenerator
+from mazegen.ascii_rendering import ASCIIRendering
 import os
 
 

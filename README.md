@@ -77,49 +77,6 @@ The shortest path between entry and exit is found using a breadth-first search.
 - Works on any valid maze, perfect or not
 
 
-## Reusable module
-
-The maze generation logic is packaged as a standalone pip package called `mazegen`.
-It can be installed and used independently of this project.
-
-### Installation
-```bash
-pip install mazegen-1.0.0-py3-none-any.whl
-```
-
-### Basic usage
-```python
-from mazegen import DepthFirstSearch
-
-gen = DepthFirstSearch(
-    width=20,
-    height=15,
-    entry=(0, 0),
-    exit_=(19, 14),
-    perfect=True,
-    seed=42
-)
-gen.generate()
-```
-
-### Access the maze structure
-```python
-# Raw grid — list[list[int]], accessed as grid[y][x]
-grid = gen.grid.cells
-
-# Hex representation — list[str]
-hex_maze = gen.create_hexa_maze()
-```
-
-### Access the solution
-```python
-# List of (x, y) coordinates
-path = gen.solver_bfs()
-
-# Cardinal directions string (N, E, S, W)
-cardinal = gen.find_cardinal_path(path)
-```
-
 ### Custom parameters
 | Parameter | Type | Description | Example |
 |---|---|---|---|

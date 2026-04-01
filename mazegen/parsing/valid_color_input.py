@@ -1,5 +1,5 @@
 from pydantic import BaseModel, model_validator
-from coloring_text import Style, Text, Background
+from mazegen.coloring_text import Style, Text, Background
 from typing import Any
 import random
 

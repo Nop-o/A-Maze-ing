@@ -1,4 +1,4 @@
-from coloring_text import Style, Text, Background
+from mazegen.coloring_text import Style, Text, Background
 
 
 class Color:
