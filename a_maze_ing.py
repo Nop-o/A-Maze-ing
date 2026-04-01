@@ -1,7 +1,7 @@
 from mazegen.parsing.parsing_file import parse_input_file
 from mazegen.error_message import possible_file_input_error_message
-from mazegen.algo_dfs import DepthFirstSearch
-from mazegen.ascii_rendering import ASCIIRendering
+from mazegen.maze_algo.algo_dfs import DepthFirstSearch
+from mazegen.maze_display.ascii_rendering import ASCIIRendering
 import sys
 
 

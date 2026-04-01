@@ -1,5 +1,5 @@
-from coloring_text import ColoringText, Style, Text, Background
-from maze_generator import MazeGenerator
+from mazegen.maze_display.coloring_text import ColoringText, Style, Text, Background
+from mazegen.maze_algo.maze_generator import MazeGenerator
 
 
 class AMazeIngTitle:
@@ -26,7 +26,7 @@ class AMazeIngTitle:
         self.tunnel = tunnel
 
     def display_title(self, maze: MazeGenerator) -> None:
-        from ascii_rendering import ASCIIRendering
+        from mazegen.maze_display.ascii_rendering import ASCIIRendering
 
         palette = ASCIIRendering.thin_palette
         full_colored_palette = self.create_colored_palette(palette,
