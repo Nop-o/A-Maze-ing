@@ -1,8 +1,9 @@
 from a_maze_ing import a_maze_ing
 import sys
-from maze_generator import MazeGenerator
-from ascii_rendering import ASCIIRendering
+from mazegen.maze_generator import MazeGenerator
+from mazegen.ascii_rendering import ASCIIRendering
 import os
+
 
 def turn_on_off(switch: bool) -> bool:
     if switch is True:
@@ -26,7 +27,6 @@ def input_choices(maze: MazeGenerator,
 2. Show/Hide path from entry to exit
 3. Rotate maze colors
 4. Quit """)
-
 
     interface = input("Choice? (1-4)")
     os.system("clear")

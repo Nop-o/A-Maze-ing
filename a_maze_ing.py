@@ -1,12 +1,12 @@
-from parsing.parsing_file import parse_input_file
-from error_message import possible_file_input_error_message
-from algo_dfs import DepthFirstSearch
-from ascii_rendering import ASCIIRendering
+from mazegen.parsing.parsing_file import parse_input_file
+from mazegen.error_message import possible_file_input_error_message
+from mazegen.algo_dfs import DepthFirstSearch
+from mazegen.ascii_rendering import ASCIIRendering
 import sys
 
 
 def a_maze_ing(file_name: str) -> int:
-    from input_choice import input_choices
+    from mazegen.input_choice import input_choices
 
     try:
         maze_setting, color_setting = parse_input_file(file_name)
@@ -63,6 +63,7 @@ def a_maze_ing(file_name: str) -> int:
     except (KeyboardInterrupt, EOFError):
         return (0)
     return (0)
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 2:

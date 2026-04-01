@@ -1,6 +1,6 @@
 import random
-from grid import Grid
-from maze_generator import MazeGenerator
+from mazegen.grid import Grid
+from mazegen.maze_generator import MazeGenerator
 from collections import deque
 import sys
 

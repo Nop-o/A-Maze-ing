@@ -1,7 +1,7 @@
-from algo_dfs import DepthFirstSearch
-from maze_generator import MazeGenerator
-from coloring_text import ColoringText, Style, Text, Background
-from color import Color
+from mazegen.algo_dfs import DepthFirstSearch
+from mazegen.maze_generator import MazeGenerator
+from mazegen.coloring_text import ColoringText, Style, Text, Background
+from mazegen.color import Color
 import sys
 
 

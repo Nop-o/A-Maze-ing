@@ -1,4 +1,4 @@
-from grid import Grid
+from mazegen.grid import Grid
 from abc import ABC, abstractmethod
 from typing import Any
 import sys
