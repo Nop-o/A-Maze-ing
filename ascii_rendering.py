@@ -1,6 +1,7 @@
 from algo_dfs import DepthFirstSearch
 from maze_generator import MazeGenerator
 from coloring_text import ColoringText, Style, Text, Background
+from amazing_title_maze import AMazeIngTitle
 from color import Color
 import sys
 
@@ -63,6 +64,9 @@ class ASCIIRendering(Color):
                      hexa_maze: list[str],
                      maze_solution: list[tuple[int, int]]) -> None:
 
+        title = AMazeIngTitle(Style.BOLD, Text.RED, Background.RED)
+        title.display_title(maze)
+
         if self.display_mode == "thin":
             palette = ASCIIRendering.thin_palette
         else:
@@ -70,7 +74,7 @@ class ASCIIRendering(Color):
 
         for y, line in enumerate(hexa_maze):
             second_row: list[str] = []
-
+            self.center_maze(maze)
             for x, column in enumerate(line):
                 func_get_cell_color = self.get_cell_color(maze,
                                                           hexa_maze,
@@ -81,8 +85,9 @@ class ASCIIRendering(Color):
                 cell_first_row, cell_second_row = func_get_cell_color
                 print(cell_first_row, end="")
                 second_row.append(cell_second_row)
-            self.display_second_row(second_row)
-        self.display_maze_bottom_row(hexa_maze)
+            self.display_second_row(maze, second_row, self.display_mode)
+        if self.display_mode == "thin":
+            self.display_maze_bottom_row(maze, hexa_maze)
 
     def get_cell_color(self, maze: MazeGenerator, hexa_maze: list[str],
                        position: tuple[int, int], key: str,
@@ -130,17 +135,22 @@ class ASCIIRendering(Color):
 
         return colored_palette
 
-    def display_second_row(self, second_row: list[str]) -> None:
+    def display_second_row(self, maze: MazeGenerator,
+                           second_row: list[str], maze_type: str) -> None:
         colored_wall = ColoringText("█", self.style, self.wall, self.tunnel)
 
-        print(colored_wall.colored_text)
+        if maze_type == "thin":
+            print(colored_wall.colored_text)
+        self.center_maze(maze)
         print("".join(second_row), end="")
-        print(colored_wall.colored_text)
+        if maze_type == "thin":
+            print(colored_wall.colored_text)
 
-    def display_maze_bottom_row(self, hexa_maze: list[str]) -> None:
+    def display_maze_bottom_row(self, maze: MazeGenerator,
+                                hexa_maze: list[str]) -> None:
         colored_roof = ColoringText("▀", self.style, self.wall,
                                     Background.BLACK)
-
+        self.center_maze(maze)
         for y in range(len(hexa_maze[0])):
             for x in range(4):
                 print(colored_roof.colored_text, end="")
@@ -188,6 +198,14 @@ class ASCIIRendering(Color):
                               solution=Background.GREEN, display_mode="thin",
                               display_solution=True)
         return [set1, set2, set3, set4, set5]
+
+    @staticmethod
+    def center_maze(maze: MazeGenerator) -> None:
+        empty_space_size = ((len(AMazeIngTitle.hexa_title[0]) * 2) -
+                            (maze.width * 2))
+
+        for i in range(empty_space_size):
+            print(" ", end="")
 
 
 if __name__ == "__main__":

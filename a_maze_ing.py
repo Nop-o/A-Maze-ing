@@ -64,6 +64,7 @@ def a_maze_ing(file_name: str) -> int:
         return (0)
     return (0)
 
+
 if __name__ == "__main__":
     if len(sys.argv) > 2:
         print("You can't have more than 1 argument.\n",
