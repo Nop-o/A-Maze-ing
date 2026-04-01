@@ -22,11 +22,10 @@ def input_choices(maze: MazeGenerator,
                   hexa_maze: list[str],
                   maze_solution: list[tuple[int, int]],
                   index: int) -> None:
-    print("""
-1. Re-generate a new maze
-2. Show/Hide path from entry to exit
-3. Rotate maze colors
-4. Quit """)
+    print("1. Re-generate a new maze")
+    print("2. Show/Hide path from entry to exit")
+    print("3. Rotate maze colors")
+    print("4. Quit")
 
     interface = input("Choice? (1-4)")
     os.system("clear")

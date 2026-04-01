@@ -23,24 +23,44 @@ class MazeGenerator(ABC):
     @abstractmethod
     def solver(self) -> Any: ...
 
-    def verif_3x3(self) -> bool:
-        for y in range(self.height - 2):
-            for x in range(self.width - 2):
-                if self.check(x, y):
+    def verif_3x3(self, x: int, y: int) -> bool:
+        pos_x = x - 1
+        pos_y = y - 1
+
+        for i, pos_x in enumerate(range(3)):
+            for j, pos_y in enumerate(range(3)):
+                if self.is_there_hole(pos_x + i, pos_y + j):
                     return True
-        return False
+        return False   
 
-    def check(self, nx: int, ny: int) -> bool:
-        for y in range(3):
-            for x in range(2):
-                if self.grid.cells[ny + y][nx + x] & self.grid.EAST:
-                    return False
-
-        for y in range(2):
-            for x in range(3):
-                if self.grid.cells[ny + y][nx + x] & self.grid.SOUTH:
+    def is_there_hole(self, x: int, y: int) -> bool:
+        if x < 0 and y < 0:
+            return False
+        for i in range(3):
+            for j in range(3):
+                if self.grid.cells[x + i][y + j] != 0:
                     return False
         return True
+        
+        
+    # def verif_3x3(self) -> bool:
+    #     for y in range(self.height - 2):
+    #         for x in range(self.width - 2):
+    #             if self.check(x, y):
+    #                 return True
+    #     return False
+
+    # def check(self, nx: int, ny: int) -> bool:
+    #     for y in range(3):
+    #         for x in range(2):
+    #             if self.grid.cells[ny + y][nx + x] & self.grid.EAST:
+    #                 return False
+
+    #     for y in range(2):
+    #         for x in range(3):
+    #             if self.grid.cells[ny + y][nx + x] & self.grid.SOUTH:
+    #                 return False
+    #     return True
 
     def create_hexa_maze(self) -> list[str]:
         hexa_maze: list[str] = []
@@ -94,18 +114,12 @@ class MazeGenerator(ABC):
         return "".join(cardinal_path)
 
     def get_logo(self) -> list[tuple[int, int]]:
-        width = self.width
-        while width > 9:
-            height = self.height
-            while height > 7:
-                possible_logo = self.create_logo(width, height)
-                if self.is_logo_valid(possible_logo):
-                    return possible_logo
-                height -= 1
-            width -= 1
-        raise ValueError(
-                "The maze height is too small to create a maze with the 42 "
-                "logo")
+        logo : list[tuple[int, int]] = []
+        possible_logo = self.create_logo(self.width, self.height)
+        if self.is_logo_valid(possible_logo):
+            logo = possible_logo
+        return logo
+
 
     def is_logo_valid(self, logo: list[tuple[int, int]]) -> bool:
         return self.entry not in logo and self.exit not in logo

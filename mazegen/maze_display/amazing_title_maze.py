@@ -30,7 +30,7 @@ class AMazeIngTitle:
 
         palette = ASCIIRendering.thin_palette
         full_colored_palette = self.create_colored_palette(palette,
-                                                           Background.RED)
+                                                           self.tunnel)
         half_colored_palette = self.create_colored_palette(palette,
                                                            Background.BLACK)
 
