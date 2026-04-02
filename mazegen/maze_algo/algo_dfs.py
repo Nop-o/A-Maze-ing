@@ -9,6 +9,7 @@ class DepthFirstSearch(MazeGenerator):
     def __init__(self, width: int, height: int, entry: tuple[int, int],
                  exit: tuple[int, int], perfect: bool, seed: int):
         super().__init__(width, height, entry, exit, perfect, seed)
+        random.seed(seed)
 
     def generate(self) -> None:
         stack = [self.entry]

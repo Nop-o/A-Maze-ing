@@ -1,4 +1,5 @@
-from mazegen.maze_display.coloring_text import ColoringText, Style, Text, Background
+from mazegen.maze_display.coloring_text import (ColoringText, Style,
+                                                Text, Background)
 from mazegen.maze_algo.maze_generator import MazeGenerator
 
 

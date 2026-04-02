@@ -37,7 +37,7 @@ def transform_input(file_name: str, file_content: list[str]) -> dict[str, Any]:
                 raise ValueError("File input is invalid : no ',' detected")
             x, y = value.split(',', 1)
             if not x or not y:
-                raise ValueError("File input is invalid : the value can't" \
+                raise ValueError("File input is invalid : the value can't"
                                  "be empty")
             return_value[key] = (x, y)
         else:

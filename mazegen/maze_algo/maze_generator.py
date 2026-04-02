@@ -34,25 +34,6 @@ class MazeGenerator(ABC):
                         return True
         return False
 
-    # def is_there_hole(self, nx: int, ny: int) -> bool:
-    #     for y in range(3):
-    #         for x in range(2):
-    #             if self.grid.cells[ny + y][nx + x] & self.grid.EAST:
-    #                 return False
-
-    #     for y in range(2):
-    #         for x in range(3):
-    #             if self.grid.cells[ny + y][nx + x] & self.grid.SOUTH:
-    #                 return False
-    #     return True
-
-    def verif_3x3_end(self) -> bool:
-        for y in range(self.height - 2):
-            for x in range(self.width - 2):
-                if self.is_there_hole(x, y):
-                    return True
-        return False
-
     def is_there_hole(self, nx: int, ny: int) -> bool:
         for y in range(3):
             for x in range(2):
@@ -117,11 +98,16 @@ class MazeGenerator(ABC):
         return "".join(cardinal_path)
 
     def get_logo(self) -> list[tuple[int, int]]:
-        logo: list[tuple[int, int]] = []
-        possible_logo = self.create_logo(self.width, self.height)
-        if self.is_logo_valid(possible_logo):
-            logo = possible_logo
-        return logo
+        width = self.width
+        while width > 9:
+            height = self.height
+            while height > 7:
+                possible_logo = self.create_logo(width, height)
+                if self.is_logo_valid(possible_logo):
+                    return possible_logo
+                height -= 1
+            width -= 1
+        return []
 
     def is_logo_valid(self, logo: list[tuple[int, int]]) -> bool:
         return self.entry not in logo and self.exit not in logo
@@ -159,50 +145,3 @@ class MazeGenerator(ABC):
             (x + 3, y + 2),
         ]
         return logo
-
-
-# arnaudn
-#     def verif_3x3(self, x: int, y: int) -> bool:
-#         pos_x = x - 2
-#         pos_y = y - 2
-
-#         for i in range(3):
-#             for j in range(3):
-#                 if self.is_there_hole(pos_x + i, pos_y + j):
-#                     return True
-#         return False
-
-#     def is_there_hole(self, x: int, y: int) -> bool:
-#         if x < 0 or y < 0:
-#             return False
-#         if x + 2 > self.width - 1 or y + 2 > self.height - 1:
-#             return False
-#         for i in range(3):
-#             for j in range(3):
-#                 if self.grid.cells[x + i][y + j] != 0:
-#                     return False
-#         return True
-
-# amine
-    # def verif_3x3_end(self, nx: int, ny: int) -> bool:
-    #     for y in range(-2, 1):
-    #         for x in range(-2, 1):
-    #             tx = nx + x
-    #             ty = ny + y
-    #             if (self.grid.is_valid(tx, ty)
-    #                and self.grid.is_valid(tx + 2, ty + 2)):
-    #                 if self.check(x, y):
-    #                     return True
-    #     return False
-
-    # def check(self, nx: int, ny: int) -> bool:
-    #     for y in range(3):
-    #         for x in range(2):
-    #             if self.grid.cells[ny + y][nx + x] & self.grid.EAST:
-    #                 return False
-
-    #     for y in range(2):
-    #         for x in range(3):
-    #             if self.grid.cells[ny + y][nx + x] & self.grid.SOUTH:
-    #                 return False
-    #     return True

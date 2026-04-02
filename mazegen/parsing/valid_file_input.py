@@ -1,4 +1,5 @@
 from pydantic import Field, BaseModel, model_validator
+import random
 from typing import Any
 
 
@@ -11,13 +12,13 @@ class ValidFileInput(BaseModel):
     exit_y: int = Field(ge=0)
     output_filename: str
     is_perfect: bool
-    seed: int | None
+    seed: int
 
     @model_validator(mode='before')
     @classmethod
     def transform_input(cls, data: dict[str, Any]) -> dict[str, Any]:
         if data["seed"] == "None":
-            data["seed"] = None
+            data["seed"] = random.randint(0, 1000000000)
         return data
 
     @model_validator(mode='after')
@@ -35,12 +36,12 @@ class ValidFileInput(BaseModel):
                 self.exit_y >= self.height):
             raise ValueError("The maze exit needs to be inside the maze")
 
-        if self.width < 9:
+        if self.width < 2:
             raise ValueError(
-                "The maze width is too small to create a maze with the 42 logo"
+                "The maze width is too small to create a maze"
                 )
-        if self.height < 7:
+        if self.height < 2:
             raise ValueError(
-                "The maze height is too small to create a maze with the 42 "
+                "The maze height is too small to create a maze"
                 "logo")
         return self

@@ -41,17 +41,17 @@ The configuration file uses KEY=VALUE format. Lines starting with # are comments
 | SEED        | Random seed              | SEED=42             |
 
 ### Maze color settings
-| Key              | Description                              | Example             |
-|------------------|------------------------------------------|---------------------|
-| STYLE            | Maze style                               | Style='1' (=Bold)   |
-| TUNNEL           | Tunnel color                             | HEIGHT=15           |
-| WALL             | Wall color                               | ENTRY=0,0           |
-| ENTRY            | Entry color                              | EXIT=19,14          |
-| EXIT             | Exit color                               | EXIT=19,14          |
-| LOGO             | Logo color                               | OUTPUT_FILE=maze.txt|
-| SOLUTION         | Solution color                           | PERFECT=True        |
-| DISPLAY_MODE     | Type of maze display                     | SEED=42             |
-| DISPLAY_SOLUTION | Display the shortest path (entry/exit) ? | SEED=42             |
+| Key              | Description                              | Example                |
+|------------------|------------------------------------------|------------------------|
+| STYLE            | Maze style                               | Style='1' (=Bold)      |
+| TUNNEL           | Tunnel color                             | TUNNEL='36' (=Cyan)    |
+| WALL             | Wall color                               | WALL='44' (=Blue)      |
+| ENTRY            | Entry color                              | ENTRY='41' (=Red)      |
+| EXIT             | Exit color                               | EXIT='42' (=Green)     |
+| LOGO             | Logo color                               | LOGO='45' (=Magenta)   |
+| SOLUTION         | Solution color                           | SOLUTION='40' (=Black) |
+| DISPLAY_MODE     | Type of maze display                     | DISPLAY_MODE='thin'    |
+| DISPLAY_SOLUTION | Display the shortest path (entry/exit) ? | DISPLAY_SOLUTION=True  |
 
 ## Algorithm
 

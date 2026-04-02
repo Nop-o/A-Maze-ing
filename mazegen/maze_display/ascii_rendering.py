@@ -1,6 +1,7 @@
 from mazegen.maze_algo.algo_dfs import DepthFirstSearch
 from mazegen.maze_algo.maze_generator import MazeGenerator
-from mazegen.maze_display.coloring_text import ColoringText, Style, Text, Background
+from mazegen.maze_display.coloring_text import (ColoringText, Style,
+                                                Text, Background)
 from mazegen.maze_display.amazing_title_maze import AMazeIngTitle
 from mazegen.maze_display.color import Color
 import sys

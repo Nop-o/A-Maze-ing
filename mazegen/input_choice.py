@@ -26,7 +26,6 @@ def input_choices(maze: MazeGenerator,
     print("2. Show/Hide path from entry to exit")
     print("3. Rotate maze colors")
     print("4. Quit")
-    print(f"maze is safe : {not maze.verif_3x3_end()}")
 
     interface = input("Choice? (1-4)")
     os.system("clear")
