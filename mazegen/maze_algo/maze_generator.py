@@ -7,7 +7,7 @@ import sys
 class MazeGenerator(ABC):
     def __init__(self, width: int, height: int, entry: tuple[int, int],
                  exit: tuple[int, int] | None,
-                 perfect: bool, seed: int | None) -> None:
+                 perfect: bool, seed: int) -> None:
         self.width = width
         self.height = height
         self.entry = entry
