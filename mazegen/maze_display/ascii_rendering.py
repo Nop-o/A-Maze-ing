@@ -89,6 +89,12 @@ class ASCIIRendering(Color):
         if self.display_mode == "thin":
             self.display_maze_bottom_row(maze, hexa_maze)
 
+        self.center_maze(maze)
+        print(f"Seed :  {maze.seed}")
+        if not maze.logo:
+            self.center_maze(maze)
+            print("Can't print 42 logo : the maze is too small")
+
     def get_cell_color(self, maze: MazeGenerator, hexa_maze: list[str],
                        position: tuple[int, int], key: str,
                        palette: dict[str, tuple[str, str]],
@@ -141,10 +147,13 @@ class ASCIIRendering(Color):
 
         if maze_type == "thin":
             print(colored_wall.colored_text)
-        self.center_maze(maze)
-        print("".join(second_row), end="")
-        if maze_type == "thin":
+            self.center_maze(maze)
+            print("".join(second_row), end="")
             print(colored_wall.colored_text)
+        else:
+            print()
+            self.center_maze(maze)
+            print("".join(second_row))
 
     def display_maze_bottom_row(self, maze: MazeGenerator,
                                 hexa_maze: list[str]) -> None:

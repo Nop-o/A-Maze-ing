@@ -29,6 +29,7 @@ make lint
 
 The configuration file uses KEY=VALUE format. Lines starting with # are comments.
 
+### Maze settings
 | Key         | Description              | Example             |
 |-------------|--------------------------|---------------------|
 | WIDTH       | Maze width (cells)       | WIDTH=20            |
@@ -39,6 +40,18 @@ The configuration file uses KEY=VALUE format. Lines starting with # are comments
 | PERFECT     | Perfect maze ?           | PERFECT=True        |
 | SEED        | Random seed              | SEED=42             |
 
+### Maze color settings
+| Key              | Description                              | Example             |
+|------------------|------------------------------------------|---------------------|
+| STYLE            | Maze style                               | Style='1' (=Bold)   |
+| TUNNEL           | Tunnel color                             | HEIGHT=15           |
+| WALL             | Wall color                               | ENTRY=0,0           |
+| ENTRY            | Entry color                              | EXIT=19,14          |
+| EXIT             | Exit color                               | EXIT=19,14          |
+| LOGO             | Logo color                               | OUTPUT_FILE=maze.txt|
+| SOLUTION         | Solution color                           | PERFECT=True        |
+| DISPLAY_MODE     | Type of maze display                     | SEED=42             |
+| DISPLAY_SOLUTION | Display the shortest path (entry/exit) ? | SEED=42             |
 
 ## Algorithm
 

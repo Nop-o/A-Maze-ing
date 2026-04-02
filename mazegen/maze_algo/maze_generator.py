@@ -23,44 +23,48 @@ class MazeGenerator(ABC):
     @abstractmethod
     def solver(self) -> Any: ...
 
-    def verif_3x3(self, x: int, y: int) -> bool:
-        pos_x = x - 1
-        pos_y = y - 1
+    def verif_3x3(self, nx: int, ny: int) -> bool:
+        for y in range(-2, 1):
+            for x in range(-2, 1):
+                tx = nx + x
+                ty = ny + y
+                if self.grid.is_valid(tx, ty) and self.grid.is_valid(tx + 2, ty + 2):
+                    if self.check(x, y):
+                        return True
+        return False 
 
-        for i, pos_x in enumerate(range(3)):
-            for j, pos_y in enumerate(range(3)):
-                if self.is_there_hole(pos_x + i, pos_y + j):
-                    return True
-        return False   
+    def is_there_hole(self, nx: int, ny: int) -> bool:
+        for y in range(3):
+            for x in range(2):
+                if self.grid.cells[ny + y][nx + x] & self.grid.EAST:
+                    return False
 
-    def is_there_hole(self, x: int, y: int) -> bool:
-        if x < 0 and y < 0:
-            return False
-        for i in range(3):
-            for j in range(3):
-                if self.grid.cells[x + i][y + j] != 0:
+        for y in range(2):
+            for x in range(3):
+                if self.grid.cells[ny + y][nx + x] & self.grid.SOUTH:
                     return False
         return True
         
-        
-    # def verif_3x3(self) -> bool:
-    #     for y in range(self.height - 2):
-    #         for x in range(self.width - 2):
-    #             if self.check(x, y):
-    #                 return True
-    #     return False
 
-    # def check(self, nx: int, ny: int) -> bool:
-    #     for y in range(3):
-    #         for x in range(2):
-    #             if self.grid.cells[ny + y][nx + x] & self.grid.EAST:
-    #                 return False
 
-    #     for y in range(2):
-    #         for x in range(3):
-    #             if self.grid.cells[ny + y][nx + x] & self.grid.SOUTH:
-    #                 return False
-    #     return True
+    def verif_3x3_end(self) -> bool:
+        for y in range(self.height - 2):
+            for x in range(self.width - 2):
+                if self.check(x, y):
+                    return True
+        return False
+
+    def check(self, nx: int, ny: int) -> bool:
+        for y in range(3):
+            for x in range(2):
+                if self.grid.cells[ny + y][nx + x] & self.grid.EAST:
+                    return False
+
+        for y in range(2):
+            for x in range(3):
+                if self.grid.cells[ny + y][nx + x] & self.grid.SOUTH:
+                    return False
+        return True
 
     def create_hexa_maze(self) -> list[str]:
         hexa_maze: list[str] = []
@@ -157,3 +161,49 @@ class MazeGenerator(ABC):
             (x + 3, y + 2),
         ]
         return logo
+
+
+# arnaudn
+#     def verif_3x3(self, x: int, y: int) -> bool:
+#         pos_x = x - 2
+#         pos_y = y - 2
+
+#         for i in range(3):
+#             for j in range(3):
+#                 if self.is_there_hole(pos_x + i, pos_y + j):
+#                     return True
+#         return False   
+
+#     def is_there_hole(self, x: int, y: int) -> bool:
+#         if x < 0 or y < 0:
+#             return False
+#         if x + 2 > self.width - 1 or y + 2 > self.height - 1:
+#             return False
+#         for i in range(3):
+#             for j in range(3):
+#                 if self.grid.cells[x + i][y + j] != 0:
+#                     return False
+#         return True
+
+# amine
+    # def verif_3x3_end(self, nx: int, ny: int) -> bool:
+    #     for y in range(-2, 1):
+    #         for x in range(-2, 1):
+    #             tx = nx + x
+    #             ty = ny + y
+    #             if self.grid.is_valid(tx, ty) and self.grid.is_valid(tx + 2, ty + 2):
+    #                 if self.check(x, y):
+    #                     return True
+    #     return False
+
+    # def check(self, nx: int, ny: int) -> bool:
+    #     for y in range(3):
+    #         for x in range(2):
+    #             if self.grid.cells[ny + y][nx + x] & self.grid.EAST:
+    #                 return False
+
+    #     for y in range(2):
+    #         for x in range(3):
+    #             if self.grid.cells[ny + y][nx + x] & self.grid.SOUTH:
+    #                 return False
+    #     return True
