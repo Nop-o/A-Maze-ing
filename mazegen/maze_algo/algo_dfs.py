@@ -1,7 +1,7 @@
-import random
 from mazegen.maze_algo.grid import Grid
 from mazegen.maze_algo.maze_generator import MazeGenerator
 from collections import deque
+import random
 import sys
 
 

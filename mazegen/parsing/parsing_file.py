@@ -90,6 +90,8 @@ def parse_input_file(file_name: str) -> tuple[ValidFileInput, ValidColorInput]:
 
 
 if __name__ == "__main__":
-    parsed_input = parse_input_file("input.txt")
+    file_name = "input.txt"
+    if file_name:
+        parsed_input = parse_input_file(file_name)
     if parsed_input:
         print(parsed_input)
