@@ -55,8 +55,16 @@ def transform_input(file_name: str, file_content: list[str]) -> dict[str, Any]:
 
 
 def parse_input_file(file_name: str) -> tuple[ValidFileInput, ValidColorInput]:
+    from mazegen.error_message import possible_file_input_error_message
+
     try:
         file_content = get_file_content(file_name)
+    except Exception as e:
+        print(e)
+        possible_file_input_error_message()
+        sys.exit(-1)
+
+    try:
         settings = transform_input(file_name, file_content)
         maze_input = ValidFileInput(width=settings["WIDTH"],
                                     height=settings["HEIGHT"],
