@@ -7,9 +7,9 @@ VENV = maze
 
 help:
 	@echo "Available commands:"
-	@echo "  make setup        			-  create virtual environment and install dependencies"
+	@echo "  make setup        			- Create virtual environment and install dependencies"
 	@echo "  make install      			- Install project dependencies"
-	@echo "  make run               	- Execute the main script"
+	@echo "  make run               	        - Execute the main script"
 	@echo "  make debug        			- Run the main script in debug mode (pdb)"
 	@echo "  make clean        			- Remove all temporary files and caches"
 	@echo "  make lint         			- Run flake8 and mypy with standard checks"
