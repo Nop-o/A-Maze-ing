@@ -1,6 +1,6 @@
 PYTHON = python3
 MAIN = a_maze_ing.py
-INPUT = input.txt
+INPUT = config.txt
 VENV = maze
 
 .SILENT:

@@ -1,4 +1,5 @@
-from mazegen.error_message import possible_file_input_error_message
-from mazegen.input_choice import input_choices
+from mazegen.algo_dfs import DepthFirstSearch
+from mazegen.maze_generator import MazeGenerator
+from mazegen.grid import Grid
 
-__all__ = ["possible_file_input_error_message", "input_choices"]
+__all__ = ["DepthFirstSearch", "MazeGenerator", "Grid"]

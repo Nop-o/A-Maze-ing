@@ -1,6 +1,5 @@
-from maze_display.coloring_text import (ColoringText, Style,
-                                        Text, Background)
-from mazegen.maze_algo.maze_generator import MazeGenerator
+from maze_display.coloring_text import (ColoringText, Style, Text, Background)
+from mazegen.maze_generator import MazeGenerator
 
 
 class AMazeIngTitle:
