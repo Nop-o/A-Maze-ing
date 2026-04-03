@@ -29,6 +29,7 @@ def input_choices(maze: MazeGenerator,
 
     interface = input("Choice? (1-4)")
     os.system("clear")
+
     if interface == '1':
         a_maze_ing('input.txt')
 

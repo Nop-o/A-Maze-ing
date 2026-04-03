@@ -80,7 +80,8 @@ class MazeGenerator(ABC):
 
     def find_cardinal_path(self, path: list[tuple[int, int]] | None) -> str:
         if path is None:
-            raise ValueError("Can't create a cardinal path : there is no path")
+            raise ValueError("Can't create a cardinal path : there is no path "
+                             "solution")
 
         cardinal_path: list[str] = []
         for cell, next_cell in zip(path, path[1:]):

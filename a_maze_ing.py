@@ -44,11 +44,11 @@ def a_maze_ing(file_name: str) -> int:
     perfect_maze_path = maze.solver()
     try:
         cardinal_path = maze.find_cardinal_path(perfect_maze_path)
+        maze.print_maze_to_file(maze_setting.output_filename,
+                                hexa_maze, cardinal_path)
     except ValueError as e:
         print(e, file=sys.stderr)
         return (-1)
-    maze.print_maze_to_file(maze_setting.output_filename,
-                            hexa_maze, cardinal_path)
 
     solution = maze.solver()
     if not solution:
