@@ -82,7 +82,7 @@ This generates `dist/mazegen-1.0.0-py3-none-any.whl` and `dist/mazegen-1.0.0.tar
 
 ## Configuration
 
-The configuration file uses a simple `KEY=VALUE` format. Lines starting with `#` are treated as comments. The default configuration file is `input.txt`.
+The configuration file uses a simple `KEY=VALUE` format. Lines starting with `#` are treated as comments. The default configuration file is `config.txt`.
 
 ### Example
 
