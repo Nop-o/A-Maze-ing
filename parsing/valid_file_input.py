@@ -23,6 +23,12 @@ class ValidFileInput(BaseModel):
 
     @model_validator(mode='after')
     def validate_input(self) -> 'ValidFileInput':
+        if not '.' in self.output_filename:
+            raise ValueError("File input is invalid : no '.' detected")
+        name, type = self.output_filename.split('.', 1)
+        if not name or type != 'txt':
+            raise ValueError("File input is invalid : wrong output file name")
+
         if (self.entry_x == self.exit_x and
                 self.entry_y == self.exit_y):
             raise ValueError("The maze entry and exit can't be in "
