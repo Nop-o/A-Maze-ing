@@ -181,32 +181,38 @@ class ASCIIRendering(Color):
         return False
 
     @staticmethod
-    def get_maze_color_set() -> list['ASCIIRendering']:
+    def get_maze_color_set(display_solution: bool, display_mode: str
+                           ) -> list['ASCIIRendering']:
         set1 = ASCIIRendering(style=Style.BOLD, wall=Text.WHITE,
                               tunnel=Background.BLACK, logo=Background.RED,
                               entry=Background.GREEN, exit=Background.BLUE,
-                              solution=Background.CYAN, display_mode="thin",
-                              display_solution=True)
+                              solution=Background.CYAN,
+                              display_mode=display_mode,
+                              display_solution=display_solution)
         set2 = ASCIIRendering(style=Style.BOLD, wall=Text.YELLOW,
                               tunnel=Background.WHITE, logo=Background.GREEN,
                               entry=Background.RED, exit=Background.MAGENTA,
-                              solution=Background.BLACK, display_mode="thin",
-                              display_solution=True)
+                              solution=Background.BLACK,
+                              display_mode=display_mode,
+                              display_solution=display_solution)
         set3 = ASCIIRendering(style=Style.BOLD, wall=Text.GREEN,
                               tunnel=Background.RED, logo=Background.BLUE,
                               entry=Background.WHITE, exit=Background.BLACK,
-                              solution=Background.MAGENTA, display_mode="thin",
-                              display_solution=True)
+                              solution=Background.MAGENTA,
+                              display_mode=display_mode,
+                              display_solution=display_solution)
         set4 = ASCIIRendering(style=Style.BOLD, wall=Text.GREEN,
                               tunnel=Background.BLACK, logo=Background.MAGENTA,
                               entry=Background.RED, exit=Background.WHITE,
-                              solution=Background.BLUE, display_mode="thin",
-                              display_solution=True)
+                              solution=Background.BLUE,
+                              display_mode=display_mode,
+                              display_solution=display_solution)
         set5 = ASCIIRendering(style=Style.BOLD, wall=Text.BLACK,
                               tunnel=Background.YELLOW, logo=Background.WHITE,
                               entry=Background.MAGENTA, exit=Background.RED,
-                              solution=Background.GREEN, display_mode="thin",
-                              display_solution=True)
+                              solution=Background.GREEN,
+                              display_mode=display_mode,
+                              display_solution=display_solution)
         return [set1, set2, set3, set4, set5]
 
     @staticmethod

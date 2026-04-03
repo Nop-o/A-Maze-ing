@@ -42,7 +42,9 @@ def input_choices(maze: MazeGenerator,
 
     elif interface == '3':
         index = set_index(index)
-        maze_color_set = ASCIIRendering.get_maze_color_set()
+        maze_color_set = ASCIIRendering.get_maze_color_set(
+            maze_color.display_solution,
+            maze_color.display_mode)
         maze_color_set[index].display_maze(maze, hexa_maze, maze_solution)
         input_choices(maze, maze_color_set[index], hexa_maze,
                       maze_solution, index, file_name)
