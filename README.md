@@ -113,31 +113,32 @@ SOLUTION=40
 
 ### Maze Settings
 
-| Key           | Type     | Description                        | Example                |
-|---------------|----------|------------------------------------|------------------------|
-| `WIDTH`       | `int`    | Number of columns                  | `WIDTH=20`             |
-| `HEIGHT`      | `int`    | Number of rows                     | `HEIGHT=15`            |
-| `ENTRY`       | `x,y`    | Entry cell coordinates             | `ENTRY=0,0`            |
-| `EXIT`        | `x,y`    | Exit cell coordinates              | `EXIT=19,14`           |
-| `OUTPUT_FILE` | `string` | Name of the export file            | `OUTPUT_FILE=maze.txt` |
-| `PERFECT`     | `bool`   | Generate a perfect maze (no loops) | `PERFECT=True`         |
-| `SEED`        | `int`    | Random seed for reproducibility    | `SEED=42`              |
+| Key           | Type            | Description                        | Example                |
+|---------------|-----------------|------------------------------------|------------------------|
+| `WIDTH`       | `int`           | Number of columns                  | `WIDTH=20`             |
+| `HEIGHT`      | `int`           | Number of rows                     | `HEIGHT=15`            |
+| `ENTRY`       | `x,y`           | Entry cell coordinates             | `ENTRY=0,0`            |
+| `EXIT`        | `x,y`           | Exit cell coordinates              | `EXIT=19,14`           |
+| `OUTPUT_FILE` | `string`        | Name of the export file            | `OUTPUT_FILE=maze.txt` |
+| `PERFECT`     | `bool`          | Generate a perfect maze (no loops) | `PERFECT=True`         |
+| `SEED`        | `int` or `None` | Random seed for reproducibility    | `SEED=42`              |
 
 ### Display & Color Settings
 
-Colors are specified as ANSI escape code values. The format used internally is `\033[{STYLE};{color}m`.
+Colors are specified as ANSI escape code values.
+The format used internally is `\033[{STYLE};{color.text};{color.background}m<TEXT>\033[0m`.
 
-| Key                | Description                           | Example                    |
-|--------------------|---------------------------------------|----------------------------|
-| `STYLE`            | Text style (0=normal, 1=bold)         | `STYLE=1`                  |
-| `TUNNEL`           | Passage color                         | `TUNNEL=36` *(cyan)*       |
-| `WALL`             | Wall background color                 | `WALL=44` *(blue)*         |
-| `ENTRY`            | Entry cell color                      | `ENTRY=41` *(red)*         |
-| `EXIT`             | Exit cell color                       | `EXIT=42` *(green)*        |
-| `LOGO`             | "42" pattern color                    | `LOGO=45` *(magenta)*      |
-| `SOLUTION`         | Solution path color                   | `SOLUTION=40` *(black)*    |
-| `DISPLAY_MODE`     | Rendering style (`thin` or default)   | `DISPLAY_MODE=thin`        |
-| `DISPLAY_SOLUTION` | Overlay the shortest path on the maze | `DISPLAY_SOLUTION=True`    |
+| Key                | Description                                     | Example                    |
+|--------------------|-------------------------------------------------|----------------------------|
+| `STYLE`            | Text style                                      | `STYLE=1` *(bold)*         |
+| `TUNNEL`           | Passage color                                   | `TUNNEL=36` *(cyan)*       |
+| `WALL`             | Wall background color                           | `WALL=44` *(blue)*         |
+| `ENTRY`            | Entry cell color                                | `ENTRY=41` *(red)*         |
+| `EXIT`             | Exit cell color                                 | `EXIT=42` *(green)*        |
+| `LOGO`             | "42" pattern color                              | `LOGO=45` *(magenta)*      |
+| `SOLUTION`         | Solution path color                             | `SOLUTION=40` *(black)*    |
+| `DISPLAY_MODE`     | Rendering style (`thin` or `large` or `None`)   | `DISPLAY_MODE=thin`        |
+| `DISPLAY_SOLUTION` | Overlay the shortest path on the maze           | `DISPLAY_SOLUTION=True`    |
 
 ---
 
