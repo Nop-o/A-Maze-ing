@@ -5,6 +5,18 @@ VENV = maze
 
 .SILENT:
 
+help:
+	@echo "Available commands:"
+	@echo "  make setup        			-  create virtual environment and install dependencies"
+	@echo "  make install      			- Install project dependencies"
+	@echo "  make run               	- Execute the main script"
+	@echo "  make debug        			- Run the main script in debug mode (pdb)"
+	@echo "  make clean        			- Remove all temporary files and caches"
+	@echo "  make lint         			- Run flake8 and mypy with standard checks"
+	@echo "  make lint-strict  			- Run flake8 and mypy with strict mode"
+	@echo "  make build        			- Build the Python package"
+	@echo "  make help         			- Show this help message"
+
 build:
 	$(PYTHON) -m build
 
@@ -15,6 +27,7 @@ setup:
 	$(PYTHON) -m venv $(VENV)
 	$(VENV)/bin/pip install --upgrade pip
 	$(VENV)/bin/pip install -r requirements.txt
+	@echo "source maze/bin/activate"
 
 run:
 	$(PYTHON) $(MAIN) $(INPUT)
@@ -29,6 +42,7 @@ clean:
 	find . -type d -name mazegen.egg-info -exec rm -rf {} +
 	find . -name "*.pyc" -delete
 	find . -name "output.txt" -delete
+	find . -name "config.txt" -delete
 
 lint:
 	$(PYTHON) -m flake8 . --exclude=maze
@@ -42,3 +56,8 @@ lint-strict:
 	$(PYTHON) -m flake8 . --exclude=maze
 	mypy	--strict . \
 	    	--explicit-package-bases
+	
+.PHONY: install run debug clean lint lint-strict build help setup
+
+
+.DEFAULT_GOAL := help
