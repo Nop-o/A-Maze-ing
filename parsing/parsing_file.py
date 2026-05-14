@@ -1,155 +1,105 @@
-from pydantic import Field, BaseModel, model_validator, ValidationError
-from typing import Dict, List, Any
+from typing import Any
+from parsing import ValidFileInput, ValidColorInput
+from pydantic import ValidationError
+import sys
 
 
-class ValidFileInput(BaseModel):
-    maze_width: int = Field(ge=0)
-    maze_height: int = Field(ge=0)
-    maze_entry_x: int = Field(ge=0)
-    maze_entry_y: int = Field(ge=0)
-    maze_exit_x: int = Field(ge=0)
-    maze_exit_y: int = Field(ge=0)
-    maze_output_filename: str
-    is_maze_perfect: bool
-    maze_seed: int | None
-    maze_algorithm: str
-    maze_display_mode: str
-
-    @model_validator(mode='after')
-    def validate_input(self) -> 'ValidFileInput':
-        if (self.maze_entry_x == self.maze_exit_x and
-                self.maze_entry_y == self.maze_exit_y):
-            raise ValueError("The maze entry and exit can't be in "
-                             "the same file")
-
-        if (self.maze_entry_x > self.maze_width or
-                self.maze_entry_y > self.maze_height):
-            raise ValueError("The maze entry needs to be inside the maze")
-
-        if (self.maze_exit_x > self.maze_width or
-                self.maze_exit_y > self.maze_height):
-            raise ValueError("The maze exit needs to be inside the maze")
-
-        if self.maze_width < 9:
-            raise ValueError(
-                "The maze width is too small to create a maze with the 42 logo"
-                )
-        if self.maze_height < 7:
-            raise ValueError(
-                "The maze height is too small to create a maze with the 42 "
-                "logo")
-        return self
-
-
-def get_file_content(file_name: str) -> List[str]:
+def get_file_content(file_name: str) -> list[str]:
     with open(file_name, 'r') as file:
-        if not file:
-            raise FileNotFoundError("The file doesn't exist, create one first "
-                                    "or use the default config")
-        file_content = file.readlines()
+        content = file.readlines()
 
+    file_content = [line.strip('\n') for line in content]
     return file_content
 
 
-def transform_input(file_content: List[str]) -> Dict[str, Any]:
-    return_value: Dict[str, Any] = {
-                          "WIDTH": None,
-                          "HEIGHT": None,
-                          "ENTRY_X": None,
-                          "ENTRY_Y": None,
-                          "EXIT_X": None,
-                          "EXIT_Y": None,
-                          "OUTPUT_FILE": None,
-                          "PERFECT": "True",
-                          "SEED": None,
-                          "ALGORITHM": "Basic",
-                          "DISPLAY_MODE": "Basic",
-                          }
-    settings = ["WIDTH", "HEIGHT", "ENTRY", "EXIT", "OUTPUT_FILE",
-                "PERFECT", "SEED", "ALGORITHM", "DISPLAY_MODE"]
+def transform_input(file_name: str, file_content: list[str]) -> dict[str, Any]:
+    settings = ["WIDTH", "HEIGHT", "ENTRY", "EXIT", "OUTPUT_FILE", "PERFECT",
+                "SEED", "DISPLAY_MODE", "DISPLAY_SOLUTION", "STYLE",
+                "WALL_COLOR", "TUNNEL_COLOR", "ENTRY_COLOR",
+                "EXIT_COLOR", "LOGO_COLOR", "SOLUTION_COLOR"]
 
+    return_value: dict[str, Any] = {}
     for data in file_content:
         if not data:
             raise ValueError("File input is invalid : "
-                             "no empty lignes are allowed")
+                             "no empty lines are allowed")
         if data[0] == '#':
-            file_content.remove(data)
+            continue
         if '=' not in data:
-            raise ValueError("File input is invalid : wrong input given")
+            raise ValueError("File input is invalid : no '=' detected")
 
         key, value = data.split("=", 1)
-        if not value:
-            raise ValueError("File input is invalid : wrong value given")
         if not key or key not in settings:
-            raise ValueError("File input is invalid : wrong key given")
+            raise ValueError("File input is invalid : the key can't be empty")
 
-        if key == "ENTRY" or key == "EXIT":
+        if key in ("ENTRY", "EXIT"):
             if ',' not in value:
-                raise ValueError("File input is invalid : wrong value given")
+                raise ValueError("File input is invalid : no ',' detected")
             x, y = value.split(',', 1)
             if not x or not y:
-                raise ValueError("File input is invalid : wrong value given")
-            return_value.update({key: (x, y)})
+                raise ValueError("File input is invalid : the value can't"
+                                 "be empty")
+            return_value[key] = (x, y)
         else:
-            return_value.update({key: value})
+            return_value[key] = value
         settings.remove(key)
+
+    if settings:
+        raise ValueError(
+            f"Missing settings to create the maze: {', '.join(settings)}")
+
+    if file_name == return_value["OUTPUT_FILE"]:
+        raise ValueError("Input and output files can't be the same")
 
     return return_value
 
 
-def validate_file_content(
-        file_content: Dict[str, Any], file_name: str) -> None:
-    int_settings = ["WIDTH", "HEIGHT", "SEED"]
-    tuple_settings = ["ENTRY", "EXIT"]
-    bool_settings = ["PERFECT"]
-    for key, value in file_content.items():
-        if key in int_settings:
-            try:
-                file_content[key] = int(value)
-            except ValueError as e:
-                print(e)
+def parse_input_file(file_name: str) -> tuple[ValidFileInput, ValidColorInput]:
+    from parsing.error_message import possible_file_input_error_message
 
-        if key in tuple_settings:
-            try:
-                x, y = value
-                file_content[key] = (int(x), int(y))
-            except ValueError as e:
-                print(e)
-
-        if key in bool_settings:
-            if value != "True" and value != "False":
-                raise ValueError("File input is invalid : wrong boolean value")
-
-    if file_name == file_content["OUTPUT_FILE"]:
-        raise ValueError("Input and output files can't be the same")
-
-
-def parse_input_file(file_name: str) -> ValidFileInput | None:
     try:
         file_content = get_file_content(file_name)
-        maze_settings = transform_input(file_content)
-        validate_file_content(maze_settings, file_name)
-        validated_file_content = ValidFileInput(
-                            maze_width=maze_settings["WIDTH"],
-                            maze_height=maze_settings["HEIGHT"],
-                            maze_entry_x=maze_settings["ENTRY"][0],
-                            maze_entry_y=maze_settings["ENTRY"][1],
-                            maze_exit_x=maze_settings["EXIT"][0],
-                            maze_exit_y=maze_settings["EXIT"][1],
-                            maze_output_filename=maze_settings["OUTPUT_FILE"],
-                            is_maze_perfect=maze_settings["PERFECT"],
-                            maze_seed=maze_settings["SEED"],
-                            maze_algorithm=maze_settings["ALGORITHM"],
-                            maze_display_mode=maze_settings["DISPLAY_MODE"]
-                                                )
-    except (ValidationError, FileNotFoundError, ValueError) as e:
+    except Exception as e:
         print(e)
-        return None
+        possible_file_input_error_message()
+        sys.exit(-1)
 
-    return validated_file_content
+    try:
+        settings = transform_input(file_name, file_content)
+        maze_input = ValidFileInput(width=settings["WIDTH"],
+                                    height=settings["HEIGHT"],
+                                    entry_x=settings["ENTRY"][0],
+                                    entry_y=settings["ENTRY"][1],
+                                    exit_x=settings["EXIT"][0],
+                                    exit_y=settings["EXIT"][1],
+                                    output_filename=settings["OUTPUT_FILE"],
+                                    is_perfect=settings["PERFECT"],
+                                    seed=settings["SEED"],
+                                    )
+        color_input = ValidColorInput(style=settings["STYLE"],
+                                      wall=settings["WALL_COLOR"],
+                                      tunnel=settings["TUNNEL_COLOR"],
+                                      entry=settings["ENTRY_COLOR"],
+                                      exit=settings["EXIT_COLOR"],
+                                      logo=settings["LOGO_COLOR"],
+                                      solution=settings["SOLUTION_COLOR"],
+                                      display_mode=settings["DISPLAY_MODE"],
+                                      display_solution=settings
+                                      ["DISPLAY_SOLUTION"],
+                                      )
+    except ValidationError as e:
+        print(e.errors()[0]["msg"], file=sys.stderr)
+        sys.exit(-1)
+    except Exception as e:
+        print(e, file=sys.stderr)
+        sys.exit(-1)
+
+    return (maze_input, color_input)
 
 
 if __name__ == "__main__":
-    parsed_input = parse_input_file("input.txt")
+    file_name = "config.txt"
+    if file_name:
+        parsed_input = parse_input_file(file_name)
     if parsed_input:
         print(parsed_input)
