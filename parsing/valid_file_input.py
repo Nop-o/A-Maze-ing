@@ -4,12 +4,12 @@ from typing import Any
 
 
 class ValidFileInput(BaseModel):
-    width: int = Field(ge=0)
-    height: int = Field(ge=0)
-    entry_x: int = Field(ge=0)
-    entry_y: int = Field(ge=0)
-    exit_x: int = Field(ge=0)
-    exit_y: int = Field(ge=0)
+    width: int = Field(ge=0, le=200)
+    height: int = Field(ge=0, le=200)
+    entry_x: int = Field(ge=0, le=200)
+    entry_y: int = Field(ge=0, le=200)
+    exit_x: int = Field(ge=0, le=200)
+    exit_y: int = Field(ge=0, le=200)
     output_filename: str
     is_perfect: bool
     seed: int
