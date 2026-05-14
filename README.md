@@ -99,7 +99,6 @@ OUTPUT_FILE=maze.txt
 PERFECT=True
 SEED=42
 # Display
-DISPLAY_MODE=thin
 DISPLAY_SOLUTION=True
 # Colors (ANSI codes)
 STYLE=1
@@ -137,7 +136,6 @@ The format used internally is `\033[{STYLE};{color.text};{color.background}m<TEX
 | `EXIT`             | Exit cell color                                 | `EXIT=42` *(green)*        |
 | `LOGO`             | "42" pattern color                              | `LOGO=45` *(magenta)*      |
 | `SOLUTION`         | Solution path color                             | `SOLUTION=40` *(black)*    |
-| `DISPLAY_MODE`     | Rendering style (`thin` or `large` or `None`)   | `DISPLAY_MODE=thin`        |
 | `DISPLAY_SOLUTION` | Overlay the shortest path on the maze           | `DISPLAY_SOLUTION=True`    |
 
 ---

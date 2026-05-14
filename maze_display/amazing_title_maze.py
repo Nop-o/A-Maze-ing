@@ -1,4 +1,4 @@
-from maze_display.coloring_text import (ColoringText, Style, Text, Background)
+from maze_display.coloring_text import ColoringText, Style, Text, Background
 from mazegen.maze_generator import MazeGenerator
 
 
@@ -17,10 +17,7 @@ class AMazeIngTitle:
         "010000100000100000001010000101111011110000010100001100011110",
     ]
 
-    def __init__(self,
-                 style: Style,
-                 wall: Text,
-                 tunnel: Background) -> None:
+    def __init__(self, style: Style, wall: Text, tunnel: Background) -> None:
         self.style = style
         self.wall = wall
         self.tunnel = tunnel
@@ -28,17 +25,21 @@ class AMazeIngTitle:
     def display_title(self, maze: MazeGenerator) -> None:
         from maze_display.ascii_rendering import ASCIIRendering
 
+        if maze.width < 50:
+            return
         palette = ASCIIRendering.thin_palette
-        full_colored_palette = self.create_colored_palette(palette,
-                                                           self.tunnel)
-        half_colored_palette = self.create_colored_palette(palette,
-                                                           Background.BLACK)
+        full_colored_palette = self.create_colored_palette(
+            palette, self.tunnel
+        )
+        half_colored_palette = self.create_colored_palette(
+            palette, Background.BLACK
+        )
 
         for y in AMazeIngTitle.hexa_title:
             second_row: list[str] = []
             self.center_title(maze)
             for x in y:
-                if x == 'F':
+                if x == "F":
                     cell_first_row, cell_second_row = full_colored_palette[x]
                 else:
                     cell_first_row, cell_second_row = half_colored_palette[x]
@@ -50,26 +51,30 @@ class AMazeIngTitle:
         print("\n\n")
 
     def create_colored_palette(
-            self,
-            palette: dict[str, tuple[str, str]],
-            background: Background) -> dict[str, tuple[str, str]]:
+        self, palette: dict[str, tuple[str, str]], background: Background
+    ) -> dict[str, tuple[str, str]]:
 
         colored_palette: dict[str, tuple[str, str]] = {}
         for key, value in palette.items():
             first_line, second_line = value
-            colored_line_1 = ColoringText(first_line, self.style,
-                                          self.wall, background)
-            colored_line_2 = ColoringText(second_line, self.style,
-                                          self.wall, background)
-            colored_palette[key] = (colored_line_1.colored_text,
-                                    colored_line_2.colored_text)
+            colored_line_1 = ColoringText(
+                first_line, self.style, self.wall, background
+            )
+            colored_line_2 = ColoringText(
+                second_line, self.style, self.wall, background
+            )
+            colored_palette[key] = (
+                colored_line_1.colored_text,
+                colored_line_2.colored_text,
+            )
 
         return colored_palette
 
     @staticmethod
     def center_title(maze: MazeGenerator) -> None:
-        empty_space_size = ((maze.width * 2) -
-                            (len(AMazeIngTitle.hexa_title[0]) * 2))
+        empty_space_size = (maze.width * 2) - (
+            len(AMazeIngTitle.hexa_title[0]) * 2
+        )
 
         for i in range(empty_space_size):
             print(" ", end="")

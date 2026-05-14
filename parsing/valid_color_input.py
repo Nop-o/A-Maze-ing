@@ -12,10 +12,9 @@ class ValidColorInput(BaseModel):
     exit: Background
     logo: Background
     solution: Background
-    display_mode: str
     display_solution: bool
 
-    @model_validator(mode='before')
+    @model_validator(mode="before")
     @classmethod
     def transform_color_input(cls, data: dict[str, Any]) -> dict[str, Any]:
         style_settings = ["style"]
@@ -44,17 +43,4 @@ class ValidColorInput(BaseModel):
                     data[key] = Text(value)
                 elif key in background_settings:
                     data[key] = Background(value)
-        return data
-
-    @model_validator(mode='before')
-    @classmethod
-    def transform_algorithm_display(cls, data: dict[str, Any]
-                                    ) -> dict[str, Any]:
-        display_list = ["thin", "large"]
-
-        if data["display_mode"] == "None":
-            data["display_mode"] = "thin"
-        elif data["display_mode"] not in display_list:
-            raise ValueError("This is not a valid maze display choice.\n "
-                             "The possible choices are large and thin")
         return data
