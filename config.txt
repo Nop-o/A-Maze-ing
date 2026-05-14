@@ -1,0 +1,37 @@
+WIDTH=15
+HEIGHT=15
+ENTRY=0,0
+EXIT=5,9
+OUTPUT_FILE=output.txt
+PERFECT=False
+SEED=None
+#Possible display : large or thin
+DISPLAY_MODE=None
+DISPLAY_SOLUTION=TRUE
+#Possible Style options :
+#- 0 for RESET
+#- 1 for BOLD
+#- 2 for DIM
+#- 3 for ITALIC
+#- 4 for UNDERLINED
+#- 5 for SLOW_BLINKING
+#- 6 for FAST_BLINKING
+#- 7 for REVERSE
+#- 8 for HIDDEN
+#- 9 for STRIKETROUGH
+STYLE=None
+#Possible color (wall/others) options :
+#- 30/40 for Black
+#- 31/41 for Red
+#- 32/42 for Gree
+#- 33/43 for Yellow
+#- 34/44 for Blue
+#- 35/45 for Magenta
+#- 36/46 for Cyan
+#- 37/47 for White
+WALL_COLOR=None
+TUNNEL_COLOR=None
+ENTRY_COLOR=None
+EXIT_COLOR=None
+LOGO_COLOR=None
+SOLUTION_COLOR=None
