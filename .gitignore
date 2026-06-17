@@ -1,2 +1,6 @@
+maze/
+__pycache__/
+.mypy_cache/
 *.pyc
 *.txt
+*.lock

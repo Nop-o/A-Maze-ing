@@ -15,14 +15,13 @@ class Grid:
 
     def create_grid(self) -> None:
         self.cells = []
-        for y in range(self.height):  # for each line
+        for y in range(self.height):
             line: list[int] = []
-            for x in range(self.width):  # for each column
+            for x in range(self.width):
                 line.append(0xF)
-            self.cells.append(line)  # grid[y][x]
+            self.cells.append(line)
 
     def remove_wall(self, x: int, y: int, direction: int) -> None:
-        # direction to go towards the neighboring cell
         dx, dy = self.DELTA[direction]
         nx = x + dx
         ny = y + dy
@@ -30,9 +29,8 @@ class Grid:
         if not self.is_valid(nx, ny):
             return
 
-        self.cells[y][x] &= ~direction  # breaks down the cell wall
+        self.cells[y][x] &= ~direction
         self.cells[ny][nx] &= ~self.OPPOSITE[direction]
-        # breaks down the wall of the neighboring cell
 
     def add_wall(self, x: int, y: int, direction: int) -> None:
         dx, dy = self.DELTA[direction]
@@ -51,10 +49,9 @@ class Grid:
         return False
 
     def display(self) -> None:
-        # ffunction that tests the grid by displaying in ASCII
-        print("+" + "---+" * self.width)  # top line
+        print("+" + "---+" * self.width)
 
-        for y in range(self.height):  # middle line
+        for y in range(self.height):
             row = "|"
             for x in range(self.width):
                 row += "   "
@@ -62,12 +59,12 @@ class Grid:
             print(row)
 
             bot = "+"
-            for x in range(self.width):  # bot line
+            for x in range(self.width):
                 bot += "---+" if self.cells[y][x] & self.SOUTH else "   +"
             print(bot)
 
 
-if __name__ == "__main__":  # main test
+if __name__ == "__main__":
     g = Grid(5, 5)
     print(g.cells[0][0])
     print(g.cells[0][1])
