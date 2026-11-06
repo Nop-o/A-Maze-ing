@@ -3,6 +3,7 @@ import sys
 from mazegen.maze_generator import MazeGenerator
 from maze_display.ascii_rendering import ASCIIRendering
 import os
+import subprocess
 
 
 def turn_on_off(switch: bool) -> bool:
@@ -31,7 +32,7 @@ def input_choices(
     print("4. Quit")
 
     interface = input("Choice? (1-4)")
-    os.system("clear")
+    subprocess.run('cls' if os.name == 'nt' else 'clear', shell=True)
 
     if interface == "1":
         a_maze_ing(file_name)
